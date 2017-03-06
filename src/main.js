@@ -9,6 +9,7 @@ import Xen from './xen'
 // Vue validation
 // https://github.com/logaretm/vee-validate
 import VeeValidate from 'vee-validate'
+import FirebaseSetup from './firebase'
 
 const config = {
   errorBagName: 'errors', // change if property conflicts.
@@ -22,6 +23,8 @@ Vue.use(VeeValidate, config)
 
 Vue.config.productionTip = false
 Xen.register(Vue)
+
+FirebaseSetup.init()
 console.dir(Vue)
 
 // Set up an event bus

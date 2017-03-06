@@ -1,19 +1,19 @@
 <template>
   <div class="page-container">
     <!--<h2 class="title">Sign In</h2>-->
-    <xen-page-toolbar class="xen-theme-indigo" title="Sign In"></xen-page-toolbar>
+    <xen-page-toolbar class="xen-theme-indigo" title="Sign Up"></xen-page-toolbar>
     <section class="row space-around">
       <div class="col-xs-6">
         <xen-card>
           <xen-card-header>
-            <h2 class="title">Sign In</h2>
+            <h2 class="title">Sign Up</h2>
           </xen-card-header>
           <xen-card-content>
             <div class="">
               <xen-input
-              label="Username"
-              :value="username"
-              @input="username = $event">
+              label="Email"
+              :value="email"
+              @input="email = $event">
               </xen-input>
 
               <xen-input class="password"
@@ -32,31 +32,38 @@
             </xen-button>-->
             <xen-button :raised="true"
             class="xen-theme-primary"
-            @click.native="signIn"
+            @click.native="signUp()"
             :disabled="errors.errors.length > 0">
-              Sign In
+              Sign Up
             </xen-button>
           </xen-card-actions>
         </xen-card>
       </div>
     </section>
-    <div class="row space-around">
-      Don't have an account?
-      <router-link to="/sign-up">
-        Sign Up.
-      </router-link>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
+  name: 'sign-up',
 
   data () {
     return {
-      username: undefined,
+      email: undefined,
       password: undefined
+    }
+  },
+
+  methods: {
+    async signUp () {
+      console.log('sign up')
+      // this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+      try {
+        await this.$firebase.auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+      } catch (error) {
+        console.warn(error)
+      }
     }
   }
 }

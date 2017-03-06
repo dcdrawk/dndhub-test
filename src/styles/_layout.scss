@@ -1,0 +1,16 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+.page-container {
+  margin-top: 56px;
+  padding-top: 16px;
+  // margin-top: 56px;
+  // padding-left: 280px;
+}
+
+.xen-no-margin {
+  margin: 0;
+}
