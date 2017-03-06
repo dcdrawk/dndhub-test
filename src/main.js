@@ -3,8 +3,34 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+// import
+import Xen from './xen'
+
+// Vue validation
+// https://github.com/logaretm/vee-validate
+import VeeValidate from 'vee-validate'
+
+const config = {
+  errorBagName: 'errors', // change if property conflicts.
+  delay: 0,
+  locale: 'en',
+  messages: null,
+  strict: true
+}
+
+Vue.use(VeeValidate, config)
 
 Vue.config.productionTip = false
+Xen.register(Vue)
+console.dir(Vue)
+
+// Set up an event bus
+var bus = new Vue({})
+Object.defineProperty(Vue.prototype, '$bus', {
+  get () {
+    return bus
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
