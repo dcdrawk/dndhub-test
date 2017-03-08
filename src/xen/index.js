@@ -9,8 +9,11 @@ import XenPageToolbar from '@/components/xen-components/PageToolbar'
 import XenSidebar from '@/components/xen-components/Sidebar'
 import XenList from '@/components/xen-components/List'
 import XenListItem from '@/components/xen-components/ListItem'
+import XenListItemCustom from '@/components/xen-components/ListItemCustom'
 import XenDivider from '@/components/xen-components/Divider'
 import XenLoadingSpinner from '@/components/xen-components/LoadingSpinner'
+import XenCheckbox from '@/components/xen-components/Checkbox'
+import XenSelect from '@/components/xen-components/Select'
 
 // Vue.use(XenButton)
 export default class Xen {
@@ -45,11 +48,20 @@ export default class Xen {
     selector: 'xen-list-item',
     name: XenListItem
   }, {
+    selector: 'xen-list-item-custom',
+    name: XenListItemCustom
+  }, {
     selector: 'xen-divider',
     name: XenDivider
   }, {
     selector: 'xen-loading-spinner',
     name: XenLoadingSpinner
+  }, {
+    selector: 'xen-checkbox',
+    name: XenCheckbox
+  }, {
+    selector: 'xen-select',
+    name: XenSelect
   }]
 
   static register (Vue) {

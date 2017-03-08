@@ -5,7 +5,16 @@
       <xen-card>
         <!--<xen-card-content>-->
         <xen-list v-if="characters">
-          <xen-list-item :text="character.name" v-for="character in characters"></xen-list-item>
+          <!--<xen-list-item :text="character.name" v-for="character in characters"></xen-list-item>-->
+          <xen-list-item-custom v-for="characterItem in characters"
+          @click.native="selectCharacter(characterItem)">
+            <xen-checkbox class="character-checkbox xen-color-blue"
+            :value="characterItem === character">
+            </xen-checkbox>
+            <div class="xen-list-item-text-container">
+              <span class="item-text">{{ characterItem.name }}</span>
+            </div>
+          </xen-list-item-custom>
         </xen-list>
         <!--</xen-card-content>-->
       </xen-card>
@@ -27,7 +36,9 @@ export default {
 
   // Methods
   methods: {
-
+    selectCharacter (character) {
+      this.$store.commit('select_character', character)
+    }
   },
 
   // Computed
@@ -38,10 +49,17 @@ export default {
 
     characters () {
       return this.$store.state.characters
+    },
+
+    character () {
+      return this.$store.state.character
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+.character-checkbox {
+  margin-right: 10px;
+}
 </style>
