@@ -22,3 +22,12 @@ body {
     margin: 0;
   }
 }
+
+.xen-page-content {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  @media only screen and (min-width: $small-breakpoint) {
+    padding-top: 16px;
+  }
+}

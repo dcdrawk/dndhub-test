@@ -2,37 +2,33 @@
   <div class="page-container">
     <xen-page-toolbar class="xen-theme-indigo" title="Profile"></xen-page-toolbar>
     <div class="xen-page-content xen-page-background">
-
-
       <div class="row space-around">
         <!--Loading Spinner-->
         <div class="col-xs-12" v-if="!user">
           <xen-loading-spinner class="xen-color-primary"></xen-loading-spinner>
         </div>
-
-        <div class="col-lg-9 col-md-9 col-xs-12" v-if="user">
+        <div class="col-lg-9 col-md-9 col-xs-12 xen-no-margin-sm" v-if="user">
           <xen-card>
+            <xen-card-header>
+              <h2 class="title">Profile Info</h2>
+            </xen-card-header>
             <xen-card-content>
-              <div class="row">
-                <div class="col-xs-12">
-                  <xen-input label="Display Name"
-                  name="display"
-                  class="xen-color-primary"
-                  :value="userEdit.displayName"
-                  @input="userEdit.displayName = $event"
-                  :disabled="!editing">
-                  </xen-input>
-                  <xen-input label="Email"
-                  name="email"
-                  class="xen-color-primary"
-                  rules="required|email"
-                  :value="userEdit.email"
-                  @input="userEdit.email = $event"
-                  :disabled="!editing">
-                  </xen-input>
-                  <xen-loading-spinner class="xen-color-primary" v-if="saving"></xen-loading-spinner>
-                </div>
-              </div>
+              <xen-input label="Display Name"
+              name="display"
+              class="xen-color-primary"
+              :value="userEdit.displayName"
+              @input="userEdit.displayName = $event"
+              :disabled="!editing">
+              </xen-input>
+              <xen-input label="Email"
+              name="email"
+              class="xen-color-primary"
+              rules="required|email"
+              :value="userEdit.email"
+              @input="userEdit.email = $event"
+              :disabled="!editing">
+              </xen-input>
+              <xen-loading-spinner class="xen-color-primary" v-if="saving"></xen-loading-spinner>
             </xen-card-content>
 
             <xen-card-actions class="text-right">
@@ -42,26 +38,15 @@
             </xen-card-actions>
           </xen-card>
         </div>
-
       </div>
-
-
     </div>
-
   </div>
 </template>
 
 <script>
 export default {
-
   // Name
   name: 'profile-page',
-
-  // Components
-  components: {},
-
-  // Props
-  props: [],
 
   // Data
   data () {
@@ -80,9 +65,6 @@ export default {
     }
   },
 
-  // Mounted
-  mounted () {},
-
   // Methods
   methods: {
     editProfile () {
@@ -91,14 +73,11 @@ export default {
     },
 
     cancelEdit () {
-      // this.user = Object.assign({}, this.userCopy)
-      // console.log()
       this.userEdit = this.userCopy
       this.editing = false
     },
 
     async saveEdit () {
-      // const user = this.$firebase.auth().currentUser
       this.userCopy = undefined
       this.editing = false
       this.saving = true
@@ -126,7 +105,6 @@ export default {
   // Watch
   watch: {
     user (value) {
-      console.log('user updated...')
       this.userEdit = value
     }
   }

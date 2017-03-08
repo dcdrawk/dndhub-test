@@ -5,24 +5,48 @@
         <section class="xen-nav">
 
           <!--No user-->
-          <xen-list :dense="true" v-if="!user">
-            <router-link to="/sign-in">
-              <xen-list-item text="Sign In" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
-            </router-link>
-            <router-link to="/sign-up">
-              <xen-list-item text="Sign Up" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
-            </router-link>
-          </xen-list>
+          <div v-if="!user">
+            <xen-list :dense="true">
+              <router-link to="/sign-in">
+                <xen-list-item text="Sign In" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+              <router-link to="/sign-up">
+                <xen-list-item text="Sign Up" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+            </xen-list>
+          </div>
 
           <!--User Links-->
-          <xen-list :dense="true" v-if="user">
-            <router-link to="/sign-in">
-              <xen-list-item text="Sign Out" :bold="true" @click.native="$bus.$emit('close-sidenav'); signOut()"></xen-list-item>
-            </router-link>
-            <router-link to="/profile">
-              <xen-list-item text="Profile" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
-            </router-link>
-          </xen-list>
+          <div v-if="user">
+
+            <section class="dndhub-profile-info" v-if="user">
+              <!--<div class="dndhub-avatar">
+                <img :src="user.photoURL" />
+              </div>-->
+              <span class="dndhub-email"><strong>{{ user.email }}</strong></span>
+              <!-- {{ characters }} -->
+              <!--<xen-select v-if="characters" class="character-select xen-color-primary" placeholder="Select a Character" :options="characters" :value="characterName" optionKey="name" @input="selectCharacter($event)"></xen-select>-->
+            </section>
+            <xen-list :dense="true">
+              <router-link to="/sign-in">
+                <xen-list-item text="Sign Out" :bold="true" @click.native="$bus.$emit('close-sidenav'); signOut()"></xen-list-item>
+              </router-link>
+              <router-link to="/profile">
+                <xen-list-item text="Profile" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+            </xen-list>
+            <xen-divider></xen-divider>
+
+            <xen-list :dense="true">
+              <router-link to="/characters/list">
+                <xen-list-item text="Character List" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+              <router-link to="/characters/new">
+                <xen-list-item text="New Character" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+            </xen-list>
+          </div>
+
         </section>
       </xen-sidebar>
     </transition>
@@ -74,6 +98,13 @@ export default {
       } catch (error) {
         console.error(error)
       }
+    },
+
+    getCharacters () {
+      const ref = this.$firebase.database().ref('characters/' + this.user.uid)
+      ref.on('value', snapshot => {
+        this.$store.commit('update_characters', snapshot.val())
+      })
     }
   },
 
@@ -85,13 +116,22 @@ export default {
   },
 
   // Watch
-  watch: {}
+  watch: {
+    user (value) {
+      if (value) {
+        this.getCharacters()
+      }
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
 @import '../../styles/variables';
-
+.dndhub-profile-info {
+  padding: 16px;
+  background-color: #eee;
+}
 .sidebar {
   left: 0;
 }

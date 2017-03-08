@@ -1,9 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
+
+// Auth Pages
 import SignIn from '@/components/pages/auth/SignIn'
 import SignUp from '@/components/pages/auth/SignUp'
 import Profile from '@/components/pages/auth/Profile'
+
+// Character Pages
+import CharacterList from '@/components/pages/characters/CharacterList'
+import NewCharacter from '@/components/pages/characters/NewCharacter'
 
 Vue.use(Router)
 
@@ -24,5 +30,13 @@ export default new Router({
     path: '/profile',
     name: 'Profile',
     component: Profile
+  }, {
+    path: '/characters/list',
+    name: 'CharacterList',
+    component: CharacterList
+  }, {
+    path: '/characters/new',
+    name: 'NewCharacter',
+    component: NewCharacter
   }]
 })

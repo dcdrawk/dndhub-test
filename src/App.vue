@@ -20,7 +20,7 @@ export default {
 
   data () {
     return {
-      toastMsg: 'Test',
+      toastMsg: undefined,
       showToast: false
     }
   },
@@ -34,10 +34,6 @@ export default {
         this.showToast = true
       })
     })
-
-    setTimeout(() => {
-      this.showToast = true
-    }, 1000)
   },
 
   methods: {

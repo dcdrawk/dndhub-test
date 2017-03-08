@@ -6,7 +6,8 @@ Vue.use(Vuex)
 // Create the main data store for our app
 const store = new Vuex.Store({
   state: {
-    user: undefined
+    user: undefined,
+    characters: undefined
   },
   mutations: {
     login (state, user) {
@@ -15,6 +16,10 @@ const store = new Vuex.Store({
 
     logout (state, user) {
       state.user = undefined
+    },
+
+    update_characters (state, characters) {
+      state.characters = characters
     }
   }
 })
