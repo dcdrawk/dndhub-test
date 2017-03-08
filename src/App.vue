@@ -1,17 +1,20 @@
 <template>
   <div id="app">
+    <sidenav></sidenav>
     <router-view></router-view>
     <xen-toast :text="toastMsg" :toggle="showToast" @hide="showToast = false"></xen-toast>
   </div>
 </template>
 
 <script>
+import Sidenav from './components/layout/Sidenav'
 import XenToast from './components/xen-components/toast'
 
 export default {
   name: 'app',
 
   components: {
+    Sidenav,
     XenToast
   },
 

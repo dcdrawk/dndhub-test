@@ -1,6 +1,5 @@
 <template>
   <div class="page-container">
-    <!--<h2 class="title">Sign In</h2>-->
     <xen-page-toolbar class="xen-theme-indigo" title="Sign In"></xen-page-toolbar>
     <section class="row space-around">
       <div class="col-xs-12 col-md-6 xen-no-margin-sm">
@@ -40,13 +39,10 @@
               data-vv-value-path="dataValue">
               </xen-input>
             </form>
+            <xen-loading-spinner class="xen-color-primary" v-if="loading">
+            </xen-loading-spinner>
           </xen-card-content>
           <xen-card-actions class="text-right">
-            <!--<xen-button class="xen-color-primary"
-            @click.native="signIn"
-            :disabled="errors.errors.length > 0">
-            Sign Up
-            </xen-button>-->
             <xen-button :raised="true"
             class="xen-theme-primary"
             @click.native="signIn"
@@ -78,18 +74,22 @@ export default {
   data () {
     return {
       email: undefined,
-      password: undefined
+      password: undefined,
+      loading: false
     }
   },
 
   methods: {
     async signIn () {
       try {
+        this.loading = true
         const user = await this.$firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         this.$bus.$emit('toast', `Signed in as ${user.email}`)
-        console.log('login success!')
+        this.$router.push({name: 'Profile'})
       } catch (error) {
         console.error(error)
+      } finally {
+        this.loading = false
       }
     },
 

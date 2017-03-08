@@ -6,6 +6,11 @@ import XenCardContent from '@/components/xen-components/CardContent'
 import XenCardActions from '@/components/xen-components/CardActions'
 import XenInput from '@/components/xen-components/Input'
 import XenPageToolbar from '@/components/xen-components/PageToolbar'
+import XenSidebar from '@/components/xen-components/Sidebar'
+import XenList from '@/components/xen-components/List'
+import XenListItem from '@/components/xen-components/ListItem'
+import XenDivider from '@/components/xen-components/Divider'
+import XenLoadingSpinner from '@/components/xen-components/LoadingSpinner'
 
 // Vue.use(XenButton)
 export default class Xen {
@@ -30,6 +35,21 @@ export default class Xen {
   }, {
     selector: 'xen-page-toolbar',
     name: XenPageToolbar
+  }, {
+    selector: 'xen-sidebar',
+    name: XenSidebar
+  }, {
+    selector: 'xen-list',
+    name: XenList
+  }, {
+    selector: 'xen-list-item',
+    name: XenListItem
+  }, {
+    selector: 'xen-divider',
+    name: XenDivider
+  }, {
+    selector: 'xen-loading-spinner',
+    name: XenLoadingSpinner
   }]
 
   static register (Vue) {
