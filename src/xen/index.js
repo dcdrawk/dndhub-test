@@ -32,8 +32,6 @@ export default class Xen {
     name: XenPageToolbar
   }]
 
-  static test = 'Testing 123'
-
   static register (Vue) {
     // console.log('register Xen Components')
     // Vue.component('xen-button', XenButton)

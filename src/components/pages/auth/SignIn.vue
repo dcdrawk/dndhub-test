@@ -41,7 +41,7 @@
         </xen-card>
       </div>
     </section>
-    <div class="row space-around">
+    <div class="row">
       Don't have an account?
       <router-link to="/sign-up">
         Sign Up.
