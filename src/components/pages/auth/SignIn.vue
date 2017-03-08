@@ -9,7 +9,7 @@
             <h2 class="title">Sign In</h2>
           </xen-card-header>
           <xen-card-content>
-            <div class="">
+            <form class="">
               <xen-input
               label="Username"
               :value="username"
@@ -22,7 +22,8 @@
               :value="password"
               @input="password = $event">
               </xen-input>
-            </div>
+              </xen-input>
+            </form>
           </xen-card-content>
           <xen-card-actions class="text-right">
             <!--<xen-button class="xen-color-primary"

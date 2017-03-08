@@ -9,27 +9,44 @@
             <h2 class="title">Sign Up</h2>
           </xen-card-header>
           <xen-card-content>
-            <div class="">
-              <xen-input
-              label="Email"
-              :value="email"
-              @input="email = $event">
-              </xen-input>
+            <input style="display:none" type="text" name="fakeusernameremembered"/>
+            <input style="display:none" type="password" name="fakepasswordremembered"/>
+            <xen-input
+            class="xen-color-primary"
+            label="Email"
+            name="email"
+            :value="email"
+            @input="email = $event"
+            :error="errors.first('email')"
+            v-validate="'required|email'"
+            data-vv-value-path="dataValue">
+            </xen-input>
 
-              <xen-input class="password"
-              label="Password"
-              type="password"
-              :value="password"
-              @input="password = $event">
-              </xen-input>
-            </div>
+            <!--<input v-validate="'required|confirmed:repassword'" v-model="password" name="password" type="text">-->
+            <!--{{ password }}-->
+            <xen-input
+            label="Password"
+            name="password"
+            type="password"
+            :value="password"
+            :error="errors.first('password')"
+            @input="password = $event; checkPassword();"
+            v-validate="'required|min:6'"
+            data-vv-value-path="dataValue">
+            </xen-input>
+
+            <xen-input
+            label="Re-type Password"
+            name="repassword"
+            type="password"
+            :value="repassword"
+            :error="errors.first('repassword') || error"
+            v-validate="'required'"
+            @input="repassword = $event; checkPassword();"
+            data-vv-value-path="dataValue">
+            </xen-input>
           </xen-card-content>
           <xen-card-actions class="text-right">
-            <!--<xen-button class="xen-color-primary"
-            @click.native="signIn"
-            :disabled="errors.errors.length > 0">
-            Sign Up
-            </xen-button>-->
             <xen-button :raised="true"
             class="xen-theme-primary"
             @click.native="signUp()"
@@ -50,7 +67,9 @@ export default {
   data () {
     return {
       email: undefined,
-      password: undefined
+      password: undefined,
+      repassword: undefined,
+      error: undefined
     }
   },
 
@@ -59,10 +78,21 @@ export default {
       console.log('sign up')
       // this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
       try {
-        await this.$firebase.auth()
+        await this.$validator.validateAll()
+        const user = await this.$firebase.auth()
           .createUserWithEmailAndPassword(this.email, this.password)
+        this.$bus.$emit('toast', `Signed up as ${user.email}`)
+        // console.log(response)
       } catch (error) {
         console.warn(error)
+      }
+    },
+
+    checkPassword () {
+      if (this.password && this.repassword && this.password !== this.repassword) {
+        this.error = 'Passwords do not match.'
+      } else {
+        this.error = undefined
       }
     }
   }
