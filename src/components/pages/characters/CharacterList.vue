@@ -6,7 +6,8 @@
         <!--<xen-card-content>-->
         <xen-list v-if="characters">
           <!--<xen-list-item :text="character.name" v-for="character in characters"></xen-list-item>-->
-          <xen-list-item-custom v-for="characterItem in characters"
+          <xen-list-item-custom v-for="(characterItem, index) in characters"
+          :key="index"
           @click.native="selectCharacter(characterItem)">
             <xen-checkbox class="character-checkbox xen-color-blue"
             :value="characterItem === character">
