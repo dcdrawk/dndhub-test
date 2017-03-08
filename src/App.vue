@@ -1,19 +1,18 @@
 <template>
   <div id="app">
-    <p>Test</p>
     <router-view></router-view>
-    <!--<xen-toast :text="toastMsg" :toggle="showToast" @hide="showToast = false"></xen-toast>-->
+    <xen-toast :text="toastMsg" :toggle="showToast" @hide="showToast = false"></xen-toast>
   </div>
 </template>
 
 <script>
-// import XenToast from './components/xen-components/toast'
+import XenToast from './components/xen-components/toast'
 
 export default {
   name: 'app',
 
   components: {
-    // XenToast
+    XenToast
   },
 
   data () {
@@ -24,6 +23,8 @@ export default {
   },
 
   mounted () {
+    this.initAuth()
+
     this.$bus.$on('toast', (text) => {
       this.$nextTick(() => {
         this.toastMsg = text
@@ -37,7 +38,7 @@ export default {
   },
 
   methods: {
-    auth () {
+    initAuth () {
       this.$firebase.auth().onAuthStateChanged(user => {
         if (user) {
           // User is signed in.
@@ -56,13 +57,13 @@ export default {
 *, *:before, *:after {
   box-sizing: border-box;
 }
-// @import './styles/core';
+@import './styles/core';
 
-// body {
-//   font-family: 'Roboto', Arial, sans-serif;
-//   font-size: 14px;
-//   background-color: #fafafa;
-//   margin: 0;
-//   padding: 0;
-// }
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 14px;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+}
 </style>

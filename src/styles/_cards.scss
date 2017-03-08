@@ -1,0 +1,8 @@
+@import './variables';
+
+@media only screen and (max-width: $small-breakpoint) {
+  body .xen-card {
+    margin-bottom: 5px;
+    margin-top: 0;
+  }
+}

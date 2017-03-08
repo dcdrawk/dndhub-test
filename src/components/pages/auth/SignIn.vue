@@ -3,7 +3,17 @@
     <!--<h2 class="title">Sign In</h2>-->
     <xen-page-toolbar class="xen-theme-indigo" title="Sign In"></xen-page-toolbar>
     <section class="row space-around">
-      <div class="col-xs-6">
+      <div class="col-xs-12 col-md-6 xen-no-margin-sm">
+
+        <xen-card v-if="user">
+          <xen-card-content  class="xen-theme-teal">
+            <p class="text-center">
+              Currently signed in as {{user.email}}.
+            </p>
+            <p class="text-center"><strong @click="signOut()">Sign Out</strong></p>
+          </xen-card-content>
+        </xen-card>
+
         <xen-card>
           <xen-card-header>
             <h2 class="title">Sign In</h2>
@@ -11,17 +21,23 @@
           <xen-card-content>
             <form class="">
               <xen-input
-              label="Username"
-              :value="username"
-              @input="username = $event">
+              class="xen-color-primary"
+              label="Email"
+              :value="email"
+              @input="email = $event"
+              :error="errors.first('email')"
+              v-validate="'required|email'"
+              data-vv-value-path="dataValue">
               </xen-input>
 
-              <xen-input class="password"
+              <xen-input class="password xen-color-primary"
               label="Password"
               type="password"
               :value="password"
-              @input="password = $event">
-              </xen-input>
+              @input="password = $event"
+              :error="errors.first('password')"
+              v-validate="'required'"
+              data-vv-value-path="dataValue">
               </xen-input>
             </form>
           </xen-card-content>
@@ -39,25 +55,57 @@
             </xen-button>
           </xen-card-actions>
         </xen-card>
+
+        <xen-card v-if="!user">
+          <xen-card-content>
+            <p class="text-center">
+              Don't have an account?
+              <router-link to="/sign-up">
+                <strong class="xen-color-primary">Sign Up.</strong>
+              </router-link>
+            </p>
+          </xen-card-content>
+        </xen-card>
       </div>
     </section>
-    <div class="row">
-      Don't have an account?
-      <router-link to="/sign-up">
-        Sign Up.
-      </router-link>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
+  name: 'sign-in',
 
   data () {
     return {
-      username: undefined,
+      email: undefined,
       password: undefined
+    }
+  },
+
+  methods: {
+    async signIn () {
+      try {
+        const user = await this.$firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        this.$bus.$emit('toast', `Signed in as ${user.email}`)
+        console.log('login success!')
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async signOut () {
+      try {
+        await this.$firebase.auth().signOut()
+        this.$bus.$emit('toast', `Sign out successful.`)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  },
+
+  computed: {
+    user () {
+      return this.$store.state.user
     }
   }
 }
