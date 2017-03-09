@@ -105,6 +105,15 @@ export default {
       ref.on('value', snapshot => {
         this.$store.commit('update_characters', snapshot.val())
       })
+
+      ref.on('child_added', data => {
+        console.log(data.val())
+        // this.$store.commit('update_characters', snapshot.val())
+        this.$bus.$emit('toast', 'Character Created.')
+      })
+//       commentsRef.on('child_added', function(data) {
+//   addCommentElement(postElement, data.key, data.val().text, data.val().author);
+// });
     }
   },
 

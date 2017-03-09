@@ -1,6 +1,18 @@
+@import 'variables';
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+// Input focus
+.input-focus-enter-active, .input-focus-leave-active {
+  transition: all 375ms $ease-out;
+}
+.input-focus-enter, .input-focus-leave-to {
+  transition: all 375ms $ease-in;
+  opacity: 0;
+  transform: scaleX(0);
 }
