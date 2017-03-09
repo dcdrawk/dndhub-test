@@ -18,6 +18,29 @@
           data-vv-value-path="dataValue">
           </xen-input>
 
+          <div class="row">
+            <div class="col-xs-6 xen-no-margin">
+              <xen-input
+              class="xen-color-primary"
+              type="number"
+              label="Level"
+              name="level"
+              :value="character.level"
+              @input="$set(character, 'level', $event)">
+              </xen-input>
+            </div>
+            <div class="col-xs-6 xen-no-margin">
+              <xen-input
+              class="xen-color-primary"
+              type="number"
+              label="Experience"
+              name="experience"
+              :value="character.experience"
+              @input="$set(character, 'experience', $event)">
+              </xen-input>
+            </div>
+          </div>
+
           <xen-select :options="classes" :option-key="'name'"
           class="xen-color-primary"
           label="Class"
@@ -50,12 +73,11 @@
           </xen-loading-spinner>
         </xen-card-content>
         <xen-card-actions class="text-right">
-          <router-link to="/characters/list">
-            <xen-button :raised="false"
-            :disabled="errors.errors.length > 0">
-              Character List
-            </xen-button>
-          </router-link>
+          <xen-button :raised="false"
+          :disabled="errors.errors.length > 0"
+          @click.native="$router.push('/characters/list');">
+            Character List
+          </xen-button>
           <xen-button :raised="true"
           class="xen-theme-primary"
           @click.native="createCharacter()"
@@ -100,10 +122,15 @@ export default {
 
   // Methods
   methods: {
-    createCharacter () {
+    async createCharacter () {
       // console.log(this.user)
-      const charRef = this.$firebase.database().ref('characters/' + this.user.uid)
-      charRef.push(this.character)
+      try {
+        await this.$validator.validateAll()
+        const charRef = this.$firebase.database().ref('characters/' + this.user.uid)
+        charRef.push(this.character)
+      } catch (error) {
+        console.error(error)
+      }
     }
     // getCharacters () {
     //   const ref = this.$firebase.database().ref('characters/' + this.user.id)

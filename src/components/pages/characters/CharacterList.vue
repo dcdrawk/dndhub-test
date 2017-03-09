@@ -16,10 +16,23 @@
             <div class="xen-list-item-text-container">
               <span class="item-text">{{ characterItem.name }}</span>
             </div>
+            <div class="xen-list-item-right">
+              <i class="material-icons xen-color-grey"
+              @click="deleteCharacter(index)">delete</i>
+            </div>
           </xen-list-item-custom>
         </xen-list>
         <!--</xen-card-content>-->
+        <xen-card-actions class="text-right">
+          <xen-button class="xen-theme-primary"
+          @click.native="$router.push('/characters/new');"
+          :raised="true">
+            New Character
+          </xen-button>
+        </xen-card-actions>
       </xen-card>
+
+
     </div>
   </div>
 </template>
@@ -40,6 +53,11 @@ export default {
   methods: {
     selectCharacter (character) {
       this.$store.commit('select_character', character)
+    },
+
+    deleteCharacter (characterId) {
+      this.$firebase.database().ref(`characters/${this.user.uid}/${characterId}`).remove()
+      // this.$store.commit('select_character', character)
     }
   },
 
