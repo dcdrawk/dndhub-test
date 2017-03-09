@@ -17,6 +17,11 @@
           v-validate="'required'"
           data-vv-value-path="dataValue">
           </xen-input>
+
+          <xen-select :options="races" :option-key="'name'"
+          :value="character.race"
+          @input="$set(character, 'race', $event)">
+          </xen-select>
           <xen-loading-spinner class="xen-color-primary" v-if="loading">
           </xen-loading-spinner>
         </xen-card-content>
@@ -28,6 +33,7 @@
             Create Character
           </xen-button>
         </xen-card-actions>
+        {{ character }}
       </xen-card>
     </div>
   </div>
@@ -82,6 +88,10 @@ export default {
   computed: {
     user () {
       return this.$store.state.user
+    },
+
+    races () {
+      return this.$store.state.gameData.races
     }
   },
 

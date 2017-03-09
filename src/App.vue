@@ -9,6 +9,7 @@
 <script>
 import Sidenav from './components/layout/Sidenav'
 import XenToast from './components/xen-components/toast'
+import GameData from './game-data'
 
 export default {
   name: 'app',
@@ -28,6 +29,7 @@ export default {
   mounted () {
     this.initAuth()
 
+    GameData.importData(this)
     this.$bus.$on('toast', (text) => {
       this.$nextTick(() => {
         this.toastMsg = text

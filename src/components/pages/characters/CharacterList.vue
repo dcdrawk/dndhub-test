@@ -2,6 +2,7 @@
   <div class="page-container">
     <xen-page-toolbar class="xen-theme-indigo" title="Character List"></xen-page-toolbar>
     <div class="xen-page-content xen-page-background">
+      <!--<xen-button></xen-button>-->
       <xen-card>
         <!--<xen-card-content>-->
         <xen-list v-if="characters">

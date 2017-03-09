@@ -8,7 +8,8 @@ const store = new Vuex.Store({
   state: {
     user: undefined,
     characters: undefined,
-    character: undefined
+    character: undefined,
+    gameData: {}
   },
   mutations: {
     login (state, user) {
@@ -25,6 +26,10 @@ const store = new Vuex.Store({
 
     select_character (state, character) {
       state.character = character
+    },
+
+    update_game_data (state, data) {
+      Vue.set(state.gameData, data.key, data.value)
     }
   }
 })
