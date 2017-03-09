@@ -112,7 +112,7 @@ export default {
 @import './styles/core';
 
 body {
-  font-family: 'Roboto', Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 14px;
   background-color: #fafafa;
   margin: 0;

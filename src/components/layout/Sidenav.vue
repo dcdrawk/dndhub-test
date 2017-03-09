@@ -45,6 +45,9 @@
               <router-link to="/general">
                 <xen-list-item text="General" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
               </router-link>
+              <router-link to="/class">
+                <xen-list-item text="Class" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
               <router-link to="/profile">
                 <xen-list-item text="Stats" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
               </router-link>
@@ -63,9 +66,6 @@
               <router-link to="/profile">
                 <xen-list-item text="Inventory" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
               </router-link>
-              <!--<router-link to="/characters/new">
-                <xen-list-item text="New Character" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
-              </router-link>-->
             </xen-list>
 
             <xen-divider></xen-divider>
@@ -88,15 +88,8 @@
 
 <script>
 export default {
-
   // Name
   name: 'sidenav',
-
-  // Components
-  components: {},
-
-  // Props
-  props: [],
 
   // Data
   data () {
@@ -104,9 +97,6 @@ export default {
       sidenavOpen: false
     }
   },
-
-  // Created
-  created () {},
 
   // Mounted
   mounted () {
@@ -135,15 +125,6 @@ export default {
       ref.on('value', snapshot => {
         this.$store.commit('update_characters', snapshot.val())
       })
-
-      // ref.on('child_added', data => {
-      //   console.log(data.val())
-      //   // this.$store.commit('update_characters', snapshot.val())
-      //   this.$bus.$emit('toast', 'Character Created.')
-      // })
-//       commentsRef.on('child_added', function(data) {
-//   addCommentElement(postElement, data.key, data.val().text, data.val().author);
-// });
     }
   },
 
@@ -194,7 +175,6 @@ export default {
   transform: translateX(0px);
 }
 .sidenav-enter, .sidenav-leave-to {
-  // opacity: 0;
   transition: all 375ms $ease-in;
   transform: translateX(-280px);
 }

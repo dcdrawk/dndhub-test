@@ -12,7 +12,8 @@ import CharacterList from '@/components/pages/characters/CharacterList'
 import NewCharacter from '@/components/pages/characters/NewCharacter'
 
 // Pages
-import General from '@/components/pages/General'
+import General from '@/components/pages/general/General'
+import Class from '@/components/pages/class/Class'
 
 Vue.use(Router)
 
@@ -45,5 +46,9 @@ export default new Router({
     path: '/general',
     name: 'General',
     component: General
+  }, {
+    path: '/class',
+    name: 'Class',
+    component: Class
   }]
 })
