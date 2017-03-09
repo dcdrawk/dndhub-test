@@ -31,3 +31,18 @@ body {
     padding-top: 16px;
   }
 }
+
+.dndhub-tab-content {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  padding: 16px;
+  overflow-y: auto;
+  @media only screen and (max-width: $small-breakpoint) {
+    padding: 0px;
+    .xen-data-table, .xen-card {
+      box-shadow: none;
+      border-bottom: 1px solid #ddd;
+    }
+  }
+}

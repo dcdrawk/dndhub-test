@@ -34,15 +34,45 @@
               <router-link to="/profile">
                 <xen-list-item text="Profile" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
               </router-link>
-            </xen-list>
-            <xen-divider></xen-divider>
-
-            <xen-list :dense="true">
               <router-link to="/characters/list">
                 <xen-list-item text="Character List" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
               </router-link>
-              <router-link to="/characters/new">
+            </xen-list>
+
+            <xen-divider></xen-divider>
+
+            <xen-list :dense="true" v-if="character">
+              <router-link to="/general">
+                <xen-list-item text="General" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+              <router-link to="/profile">
+                <xen-list-item text="Stats" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+              <router-link to="/profile">
+                <xen-list-item text="Feats" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+              <router-link to="/profile">
+                <xen-list-item text="Weapons" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+              <router-link to="/profile">
+                <xen-list-item text="Armor" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+              <router-link to="/profile">
+                <xen-list-item text="Spells" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+              <router-link to="/profile">
+                <xen-list-item text="Inventory" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
+              <!--<router-link to="/characters/new">
                 <xen-list-item text="New Character" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>-->
+            </xen-list>
+
+            <xen-divider></xen-divider>
+
+            <xen-list :dense="true">
+              <router-link to="/profile">
+                <xen-list-item text="Groups" :bold="true" @click.native="$bus.$emit('close-sidenav'); signOut()"></xen-list-item>
               </router-link>
             </xen-list>
           </div>
@@ -121,6 +151,10 @@ export default {
   computed: {
     user () {
       return this.$store.state.user
+    },
+
+    character () {
+      return this.$store.state.character
     }
   },
 

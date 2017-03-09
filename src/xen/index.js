@@ -14,6 +14,8 @@ import XenDivider from '@/components/xen-components/Divider'
 import XenLoadingSpinner from '@/components/xen-components/LoadingSpinner'
 import XenCheckbox from '@/components/xen-components/Checkbox'
 import XenSelect from '@/components/xen-components/Select'
+import XenDialog from '@/components/xen-components/Dialog'
+import XenTabs from '@/components/xen-components/Tabs'
 
 // Vue.use(XenButton)
 export default class Xen {
@@ -62,15 +64,15 @@ export default class Xen {
   }, {
     selector: 'xen-select',
     name: XenSelect
+  }, {
+    selector: 'xen-dialog',
+    name: XenDialog
+  }, {
+    selector: 'xen-tabs',
+    name: XenTabs
   }]
 
   static register (Vue) {
-    // console.log('register Xen Components')
-    // Vue.component('xen-button', XenButton)
-    // Vue.component('xen-button', XenButton)
-    // console.dir(Vue)
-    // return Vue
-
     this.components.forEach(component => {
       Vue.component(component.selector, component.name)
     })

@@ -22,7 +22,8 @@ export default {
   data () {
     return {
       toastMsg: undefined,
-      showToast: false
+      showToast: false,
+      characterRef: undefined
     }
   },
 
@@ -35,6 +36,22 @@ export default {
         this.toastMsg = text
         this.showToast = true
       })
+    })
+
+    this.$bus.$on('back', () => {
+      window.history.back()
+    })
+
+    this.$bus.$on('set_character', (characterId) => {
+      this.getCharacter(characterId)
+    })
+
+    this.$bus.$on('update_character', (data) => {
+      let update = {}
+      update[data.key] = data.value
+      this.$store.commit('update_character', data)
+      console.log(update)
+      this.characterRef.update(update)
     })
   },
 
@@ -49,6 +66,40 @@ export default {
           this.$store.commit('logout', user)
         }
       })
+    },
+
+    getCharacter (characterId) {
+      if (this.characterRef) {
+        this.characterRef.off()
+      }
+      this.characterRef = this.$firebase.database().ref(`/characters/${this.user.uid}/${characterId}`)
+      this.characterRef.once('value', (snapshot) => {
+        let character = Object.assign({}, snapshot.val())
+        character.id = characterId
+        this.$store.commit('set_character', character)
+      })
+    }
+  },
+
+  computed: {
+    user () {
+      return this.$store.state.user
+    },
+
+    character () {
+      return this.$store.state.character
+    },
+
+    characterId () {
+      return this.$store.state.characterId
+    }
+  },
+
+  watch: {
+    user (value) {
+      if (value && this.characterId) {
+        this.getCharacter(this.characterId)
+      }
     }
   }
 }

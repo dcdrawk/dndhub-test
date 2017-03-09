@@ -2,7 +2,7 @@
   <div class="page-container">
     <xen-page-toolbar class="xen-theme-indigo" title="New Character"></xen-page-toolbar>
     <div class="xen-page-content xen-page-background">
-      <xen-card>
+      <xen-card class="new-character-card">
         <xen-card-header>
           <h2 class="title">Character Info</h2>
         </xen-card-header>
@@ -123,22 +123,16 @@ export default {
   // Methods
   methods: {
     async createCharacter () {
-      // console.log(this.user)
       try {
         await this.$validator.validateAll()
         const charRef = this.$firebase.database().ref('characters/' + this.user.uid)
-        charRef.push(this.character)
+        await charRef.push(this.character)
+        this.$bus.$emit('toast', 'Character Created.')
+        this.$router.push('/characters/list')
       } catch (error) {
         console.error(error)
       }
     }
-    // getCharacters () {
-    //   const ref = this.$firebase.database().ref('characters/' + this.user.id)
-    //   ref.once('value', snapshot => {
-    //     console.log(snapshot.val())
-    //     this.characters = snapshot.val()
-    //   })
-    // }
   },
 
   // Computed
@@ -162,17 +156,20 @@ export default {
     backgrounds () {
       return this.$store.state.gameData.backgrounds
     }
-  },
-
-  watch: {
-    user (value) {
-      if (value) {
-        // this.getCharacters()
-      }
-    }
   }
+
+  // watch: {
+  //   user (value) {
+  //     if (value) {
+  //       // this.getCharacters()
+  //     }
+  //   }
+  // }
 }
 </script>
 
 <style scoped lang="scss">
+.new-character-card {
+  margin-bottom: 0;
+}
 </style>

@@ -11,6 +11,9 @@ import Profile from '@/components/pages/auth/Profile'
 import CharacterList from '@/components/pages/characters/CharacterList'
 import NewCharacter from '@/components/pages/characters/NewCharacter'
 
+// Pages
+import General from '@/components/pages/General'
+
 Vue.use(Router)
 
 export default new Router({
@@ -38,5 +41,9 @@ export default new Router({
     path: '/characters/new',
     name: 'NewCharacter',
     component: NewCharacter
+  }, {
+    path: '/general',
+    name: 'General',
+    component: General
   }]
 })

@@ -5,12 +5,16 @@ Vue.use(Vuex)
 
 // Create the main data store for our app
 const store = new Vuex.Store({
+  // State
   state: {
     user: undefined,
     characters: undefined,
+    characterId: window.localStorage.getItem('characterId'),
     character: undefined,
     gameData: {}
   },
+
+  // Mutations
   mutations: {
     login (state, user) {
       state.user = user
@@ -24,8 +28,24 @@ const store = new Vuex.Store({
       state.characters = characters
     },
 
-    select_character (state, character) {
+    set_character (state, character) {
+      // console.log('state set char')
+      if (character) {
+        if (character.id) {
+          state.characterId = character.id
+          window.localStorage.setItem('characterId', character.id)
+        }
+      } else {
+        state.characterId = undefined
+        window.localStorage.removeItem('characterId')
+      }
       state.character = character
+    },
+
+    update_character (state, data) {
+      console.log('state update char')
+      Vue.set(state.character, data.key, data.value)
+      window.localStorage.setItem('character', window.JSON.stringify(state.character))
     },
 
     update_game_data (state, data) {
