@@ -2,7 +2,10 @@
   <div id="app">
     <sidenav></sidenav>
     <router-view></router-view>
-    <xen-toast :text="toastMsg" :toggle="showToast" @hide="showToast = false"></xen-toast>
+    <xen-toast :text="toastMsg"
+    :show="showToast"
+    @queue="showToast = false">
+    </xen-toast>
   </div>
 </template>
 
@@ -47,16 +50,21 @@ export default {
     })
 
     this.$bus.$on('update_character', (data) => {
-      // if (data.path) {
-        // this.$store.commit('update_character_path', data)
-        // this.$firebase.database().ref(`${this.refPath}/{data.path}`).set(data.value)
-      // } else {
       let update = {}
       update[data.key] = data.value
       this.$store.commit('update_character', data)
-      console.log(update)
       this.characterRef.update(update)
-      // }
+    })
+
+    this.$bus.$on('push_item', (data) => {
+      const ref = this.$firebase.database().ref(`${this.refPath}/${data.key}`)
+      ref.push(data.value).then(snapshot => {
+        this.$store.commit('push_item', {
+          prop: data.key,
+          key: snapshot.key,
+          value: data.value
+        })
+      })
     })
   },
 

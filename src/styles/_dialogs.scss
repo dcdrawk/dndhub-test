@@ -1,0 +1,15 @@
+.dialog-description {
+  width: 100%;
+  ul {
+    margin-bottom: 0;
+    background-color: #fafafa;
+    border: 1px solid #BDBDBD;
+    li {
+      padding: 8px;
+      border-bottom: 1px solid #BDBDBD;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}

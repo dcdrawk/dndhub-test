@@ -7,6 +7,7 @@
         <!--<character-tab></character-tab>-->
       </div>
       <div slot="Browse">
+        <browse-tab></browse-tab>
         <!--<background-tab></background-tab>-->
       </div>
     </xen-tabs>
@@ -14,7 +15,7 @@
 </template>
 
 <script>
-// import CharacterTab from './CharacterTab'
+import BrowseTab from './BrowseTab'
 // import BackgroundTab from './BackgroundTab'
 
 export default {
@@ -23,6 +24,7 @@ export default {
 
   // Components
   components: {
+    BrowseTab
     // CharacterTab,
     // BackgroundTab
   }

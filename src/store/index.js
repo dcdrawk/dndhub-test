@@ -47,6 +47,11 @@ const store = new Vuex.Store({
       // window.localStorage.setItem('character', window.JSON.stringify(state.character))
     },
 
+    push_item (state, data) {
+      Vue.set(state.character[data.prop], data.key, data.value)
+      // window.localStorage.setItem('character', window.JSON.stringify(state.character))
+    },
+
     update_ability_score (state, data) {
       if (state.character.abilityScores) {
         Vue.set(state.character.abilityScores[data.score], data.key, data.value)
