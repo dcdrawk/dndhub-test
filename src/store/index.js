@@ -49,7 +49,10 @@ const store = new Vuex.Store({
 
     push_item (state, data) {
       Vue.set(state.character[data.prop], data.key, data.value)
-      // window.localStorage.setItem('character', window.JSON.stringify(state.character))
+    },
+
+    remove_item (state, data) {
+      Vue.delete(state.character[data.prop], data.id)
     },
 
     update_ability_score (state, data) {

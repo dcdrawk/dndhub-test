@@ -29,7 +29,7 @@
         </tbody>
       </table>
     </div>
-    <!--{{ selectdItem }}-->
+    <!-- Selected Item Dialog -->
     <div v-if="selectedItem">
       <xen-dialog
       :show="showModal"
@@ -38,11 +38,18 @@
       :fullscreen="true"
       :back="true"
       :primary="true">
-        <div class="dialog-description"
-        v-html="selectedItem.description">
+        <div class="dialog-description">
+          {{ selectedItem.description }}
+        </div>
+        <div slot="actions">
+          <xen-button @click.native="$bus.$emit('back')" class="xen-color-primary">
+            Close
+          </xen-button>
         </div>
       </xen-dialog>
     </div>
+
+
   </section>
 </template>
 
@@ -51,27 +58,16 @@ export default {
   // Name
   name: 'browse-feats-tab',
 
-  // Components
-  components: {},
-
-  // Props
-  props: [],
-
   // Data
   data () {
     return {
       field: 'feats',
       selectedItem: undefined,
       showModal: false,
+      // showCustomModal: false,
       modalTitle: undefined
     }
   },
-
-  // Created
-  created () {},
-
-  // Mounted
-  mounted () {},
 
   // Methods
   methods: {
@@ -85,10 +81,10 @@ export default {
     },
 
     addItem (item) {
-      // this.$bus.$emit('push_item', {
-      //   key: this.field,
-      //   value: item
-      // })
+      this.$bus.$emit('push_item', {
+        key: this.field,
+        value: item
+      })
       this.$bus.$emit('toast', `${item.name} Added`)
     }
   },
@@ -102,15 +98,10 @@ export default {
     character () {
       return this.$store.state.character
     }
-  },
-
-  // Watch
-  watch: {}
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.add-col {
-  width: 72px;
-}
+
 </style>

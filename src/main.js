@@ -12,10 +12,19 @@ import Xen from './xen'
 import VeeValidate from 'vee-validate'
 import FirebaseSetup from './firebase'
 
+const dictionary = {
+  en: {
+    messages: {
+      required: () => 'This field is required'
+    }
+  }
+}
+
 const config = {
   errorBagName: 'errors', // change if property conflicts.
   delay: 0,
   locale: 'en',
+  dictionary: dictionary,
   messages: null,
   strict: true
 }

@@ -66,6 +66,15 @@ export default {
         })
       })
     })
+
+    this.$bus.$on('remove_item', (data) => {
+      this.$store.commit('remove_item', {
+        prop: data.key,
+        id: data.id
+      })
+      this.$firebase.database().ref(`${this.refPath}/${data.key}/${data.id}`)
+      .remove()
+    })
   },
 
   methods: {

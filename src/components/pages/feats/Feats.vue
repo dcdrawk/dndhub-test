@@ -5,6 +5,7 @@
     <xen-tabs class="xen-page-tabs" theme="indigo" default-tab="Known">
       <div slot="Known">
         <!--<character-tab></character-tab>-->
+        <known-tab></known-tab>
       </div>
       <div slot="Browse">
         <browse-tab></browse-tab>
@@ -16,6 +17,7 @@
 
 <script>
 import BrowseTab from './BrowseTab'
+import KnownTab from './KnownTab'
 // import BackgroundTab from './BackgroundTab'
 
 export default {
@@ -24,7 +26,8 @@ export default {
 
   // Components
   components: {
-    BrowseTab
+    BrowseTab,
+    KnownTab
     // CharacterTab,
     // BackgroundTab
   }
