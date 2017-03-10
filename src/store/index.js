@@ -43,9 +43,21 @@ const store = new Vuex.Store({
     },
 
     update_character (state, data) {
-      console.log('state update char')
       Vue.set(state.character, data.key, data.value)
-      window.localStorage.setItem('character', window.JSON.stringify(state.character))
+      // window.localStorage.setItem('character', window.JSON.stringify(state.character))
+    },
+
+    update_ability_score (state, data) {
+      if (state.character.abilityScores) {
+        Vue.set(state.character.abilityScores[data.score], data.key, data.value)
+      }
+      // const path = data.path.split('/')
+      // path.forEach((prop) => {
+
+      // })
+      // Vue.set(state.character[path[0]], data.key, data.value)
+      // Vue.set(state.character, data.key, data.value)
+      // window.localStorage.setItem('character', window.JSON.stringify(state.character))
     },
 
     update_game_data (state, data) {

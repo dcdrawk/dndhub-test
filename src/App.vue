@@ -47,11 +47,16 @@ export default {
     })
 
     this.$bus.$on('update_character', (data) => {
+      // if (data.path) {
+        // this.$store.commit('update_character_path', data)
+        // this.$firebase.database().ref(`${this.refPath}/{data.path}`).set(data.value)
+      // } else {
       let update = {}
       update[data.key] = data.value
       this.$store.commit('update_character', data)
-      console.log(update)
+      // console.log(update)
       this.characterRef.update(update)
+      // }
     })
   },
 
@@ -72,7 +77,7 @@ export default {
       if (this.characterRef) {
         this.characterRef.off()
       }
-      this.characterRef = this.$firebase.database().ref(`/characters/${this.user.uid}/${characterId}`)
+      this.characterRef = this.$firebase.database().ref(this.refPath)
       this.characterRef.once('value', (snapshot) => {
         let character = Object.assign({}, snapshot.val())
         character.id = characterId
@@ -92,6 +97,12 @@ export default {
 
     characterId () {
       return this.$store.state.characterId
+    },
+
+    refPath () {
+      if (this.user && this.characterId) {
+        return `/characters/${this.user.uid}/${this.characterId}`
+      }
     }
   },
 
