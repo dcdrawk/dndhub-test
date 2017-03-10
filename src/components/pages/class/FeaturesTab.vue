@@ -1,30 +1,40 @@
 <template>
   <section class="dndhub-tab-content">
-    <xen-card class="margin-bottom" v-if="character">
+    <xen-card v-if="character">
       <xen-card-content>
-        Settings
+        <!--Sort Select-->
+        <xen-select
+        class="xen-no-margin xen-color-primary"
+        :value="character.classFeatSort || 'All'"
+        @input="$bus.$emit('update_character', { key: 'classFeatSort', value: $event });"
+        :options="['All', 'Known']">
+
+        </xen-select>
       </xen-card-content>
     </xen-card>
 
-    <xen-card class="margin-bottom" v-if="character">
+    <xen-card v-if="character">
       <xen-card-header>
-        <h2 class="title">Primary Class ({{character.classPrimary}})</h2>
+        <h2 class="title">
+          {{character.classPrimary}}, {{character.archetypePrimary}} - Level {{primaryLevel}}
+        </h2>
       </xen-card-header>
-      <xen-list v-if="primaryFeatures">
-        <xen-list-item v-for="(feature, index) in primaryFeatures" :key="index"
+      <xen-list v-if="filteredPrimary"  :dense="true">
+        <xen-list-item v-for="(feature, index) in filteredPrimary" :key="index"
         :text="feature.title" :secondary-text="`Level ${feature.level}`"
         @click.native="selectFeat(feature)">
         </xen-list-item>
       </xen-list>
     </xen-card>
 
-    <xen-card v-if="character ? character.enableSecondaryClass : false"
-    class="margin-bottom">
+    <xen-card v-if="character ? character.enableSecondaryClass : false">
       <xen-card-header>
-        <h2 class="title">Secondary Class ({{character.classSecondary}})</h2>
+        <h2 class="title">
+          {{character.classSecondary}}, {{character.archetypeSecondary}} - Level {{secondaryLevel}}
+        </h2>
       </xen-card-header>
-      <xen-list v-if="secondaryFeatures">
-        <xen-list-item v-for="(feature, index) in secondaryFeatures" :key="index"
+      <xen-list v-if="filteredSecondary" :dense="true">
+        <xen-list-item v-for="(feature, index) in filteredSecondary" :key="index"
         :text="feature.title" :secondary-text="`Level ${feature.level}`"
         @click.native="selectFeat(feature)">
         </xen-list-item>
@@ -60,7 +70,7 @@
 <script>
 export default {
   // Name
-  name: 'class-info-tab',
+  name: 'feature-tab',
 
   // Data
   data () {
@@ -126,12 +136,55 @@ export default {
 
   // Computed
   computed: {
-    features () {
-      let features
-      if (this.primaryFeatures) {
-        features = this.primaryFeatures
+    primaryLevel () {
+      if (this.character) {
+        if (this.character.enableSecondaryClass === true) {
+          return this.character.levelPrimary || 1
+        } else {
+          return this.character.level || 1
+        }
       }
-      return features
+    },
+
+    secondaryLevel () {
+      if (this.character) {
+        if (this.character.enableSecondaryClass === true) {
+          return this.character.levelSecondary || 1
+        } else {
+          return this.character.level || 1
+        }
+      }
+    },
+    // features () {
+    //   let features
+    //   if (this.primaryFeatures) {
+    //     features = this.primaryFeatures
+    //   }
+    //   return features
+    // },
+
+    filteredPrimary () {
+      return this.primaryFeatures.filter((feat) => {
+        if (this.character.classFeatSort === 'All') {
+          return true
+        } else if (this.character.classFeatSort === 'Known') {
+          return +feat.level <= +this.character.level
+        }
+      }).sort((a, b) => {
+        return +a.level - +b.level
+      })
+    },
+
+    filteredSecondary () {
+      return this.secondaryFeatures.filter((feat) => {
+        if (this.character.classFeatSort === 'All') {
+          return true
+        } else if (this.character.classFeatSort === 'Known') {
+          return +feat.level <= +this.character.level
+        }
+      }).sort((a, b) => {
+        return +a.level - +b.level
+      })
     },
 
     character () {

@@ -12,6 +12,7 @@
         <!--<background-tab></background-tab>-->
       </div>
       <div slot="Proficiency">
+        <proficiency-tab></proficiency-tab>
         <!--<background-tab></background-tab>-->
       </div>
     </xen-tabs>
@@ -21,6 +22,7 @@
 <script>
 import ClassInfoTab from './ClassInfoTab'
 import FeaturesTab from './FeaturesTab'
+import ProficiencyTab from './ProficiencyTab'
 // import BackgroundTab from './BackgroundTab'
 
 export default {
@@ -30,7 +32,8 @@ export default {
   // Components
   components: {
     ClassInfoTab,
-    FeaturesTab
+    FeaturesTab,
+    ProficiencyTab
     // CharacterTab,
     // BackgroundTab
   }
