@@ -15,6 +15,7 @@ import NewCharacter from '@/components/pages/characters/NewCharacter'
 import General from '@/components/pages/general/General'
 import Class from '@/components/pages/class/Class'
 import Stats from '@/components/pages/stats/Stats'
+import Feats from '@/components/pages/feats/Feats'
 
 Vue.use(Router)
 
@@ -55,5 +56,9 @@ export default new Router({
     path: '/stats',
     name: 'Stats',
     component: Stats
+  }, {
+    path: '/feats',
+    name: 'Feats',
+    component: Feats
   }]
 })

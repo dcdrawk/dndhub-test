@@ -51,7 +51,7 @@
               <router-link to="/stats">
                 <xen-list-item text="Stats" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
               </router-link>
-              <router-link to="/profile">
+              <router-link to="/feats">
                 <xen-list-item text="Feats" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
               </router-link>
               <router-link to="/profile">
