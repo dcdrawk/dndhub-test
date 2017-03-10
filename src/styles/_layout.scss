@@ -19,8 +19,11 @@ body {
   width: 100%;
 }
 
-.xen-no-margin {
+.xen-no-margin,
+.xen-input-container.xen-no-margin {
   margin: 0;
+  margin-bottom: 0;
+  margin-top: 0;
 }
 
 .xen-no-margin-sm {

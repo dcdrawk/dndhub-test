@@ -54,7 +54,7 @@ export default {
       let update = {}
       update[data.key] = data.value
       this.$store.commit('update_character', data)
-      // console.log(update)
+      console.log(update)
       this.characterRef.update(update)
       // }
     })
