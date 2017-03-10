@@ -7,7 +7,10 @@
         <ability-score-tab></ability-score-tab>
       </div>
       <div slot="Saving Throws">
-        <!--<background-tab></background-tab>-->
+        <saving-throws-tab></saving-throws-tab>
+      </div>
+      <div slot="Skills">
+        <skills-tab></skills-tab>
       </div>
     </xen-tabs>
   </div>
@@ -15,6 +18,8 @@
 
 <script>
 import AbilityScoreTab from './AbilityScoreTab'
+import SavingThrowsTab from './SavingThrowsTab'
+import SkillsTab from './SkillsTab'
 // import BackgroundTab from './BackgroundTab'
 
 export default {
@@ -23,7 +28,9 @@ export default {
 
   // Components
   components: {
-    AbilityScoreTab
+    AbilityScoreTab,
+    SavingThrowsTab,
+    SkillsTab
     // BackgroundTab
   }
 }

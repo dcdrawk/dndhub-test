@@ -1,57 +1,53 @@
 <template>
   <section class="dndhub-tab-content">
     <xen-card v-if="character">
-          <div class="xen-data-table striped">
-             {{ character.abilityScores }}
-            <table>
-              <thead>
-                <tr>
-                  <th class="xen-first-col">
-                    Stat
-                  </th>
-                  <th class="text-center">
-                    Base
-                  </th>
-                  <th class="text-center">
-                    Bonus
-                  </th>
-                  <th class="text-center">
-                    Modifier
-                  </th>
-                </tr>
-              </thead>
-              <tbody v-if="character.abilityScores">
-                <tr v-for="score in abilityScores" v-if="character.abilityScores[score.name]">
-                  <td class="xen-first-col">{{ score.name }}</td>
-                  <td class="text-center">
-                    <xen-input class="xen-color-primary small-table-input"
-                    type="number"
-                    :value="+character.abilityScores[score.name].base"
-                    @input="updateAbilityScore(score.name, 'base', $event)">
-                    </xen-input>
-                  </td>
-                  <td class="text-center">
-                    <xen-input class="xen-color-primary small-table-input"
-                    type="number"
-                    :value="+character.abilityScores[score.name].bonus"
-                    @input="updateAbilityScore(score.name, 'bonus', $event)">
-                    </xen-input>
-                  </td>
-                  <!--<td class="text-center" v-if="character.abilityScores[score.name]">
-                     <xen-input class="xen-color-primary small-table-input" type="number" :value="+character.abilityScores[score.name].bonus || 0"
-                     @input="$set(character.abilityScores[score.name], 'bonus', $event); $root.updateCharacter('abilityScores/' + score.name + '/', 'bonus', character.abilityScores[score.name].bonus);"></xen-input>-->
-                  <td class="text-center">
-                    <xen-input :disabled="true"
-                    class="xen-color-primary small-table-input"
-                    type="number"
-                    :value="getAbilityScoreModifier(score.name)">
-                    </xen-input>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
+      <div class="xen-data-table dnd-table-dense striped">
+          <!--{{ character.abilityScores }}-->
+        <table>
+          <thead>
+            <tr>
+              <th class="xen-first-col">
+                Stat
+              </th>
+              <th class="text-center">
+                Base
+              </th>
+              <th class="text-center">
+                Bonus
+              </th>
+              <th class="text-center">
+                Modifier
+              </th>
+            </tr>
+          </thead>
+          <tbody v-if="character.abilityScores">
+            <tr v-for="score in abilityScores" v-if="character.abilityScores[score.name]">
+              <td class="xen-first-col">{{ score.name }}</td>
+              <td class="text-center">
+                <xen-input class="xen-color-primary small-table-input"
+                type="number"
+                :value="+character.abilityScores[score.name].base"
+                @input="updateAbilityScore(score.name, 'base', $event)">
+                </xen-input>
+              </td>
+              <td class="text-center">
+                <xen-input class="xen-color-primary small-table-input"
+                type="number"
+                :value="+character.abilityScores[score.name].bonus"
+                @input="updateAbilityScore(score.name, 'bonus', $event)">
+                </xen-input>
+              </td>
+              <td class="text-center">
+                <xen-input :disabled="true"
+                class="xen-color-primary small-table-input"
+                type="number"
+                :value="getAbilityScoreModifier(score.name)">
+                </xen-input>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </xen-card>
   </section>
 </template>
@@ -64,7 +60,6 @@ export default {
   // Data
   data () {
     return {
-      // subraces: undefined
       abilityScores: [{
         name: 'Strength'
       }, {
@@ -119,15 +114,10 @@ export default {
           bonus: 0
         }
       })
-      console.log(this.character.abilityScores)
       this.$bus.$emit('update_character', { key: 'abilityScores', value: this.character.abilityScores })
-      this.$root.updateCharacter('', 'abilityScores', this.character.abilityScores)
     },
 
     updateAbilityScore (score, key, value) {
-      console.log('oopdate')
-      console.log(this.$root)
-      console.log(`${this.refPath}/abilityScores/${score}/${key}`)
       this.$store.commit('update_ability_score', {
         score: score,
         key: key,
@@ -140,26 +130,9 @@ export default {
     getAbilityScoreModifier (name) {
       const base = +this.character.abilityScores[name].base
       const bonus = +this.character.abilityScores[name].bonus
-      // score = !isNaN(score) ? score : 0
-      // bonus = !isNaN(bonus) ? bonus : 0
       const total = base + bonus
       return Math.floor((parseInt(total, 0) / 2 - 5))
     }
-    // Get the list of subraces from a race
-    // getSubraces (raceName) {
-    //   if (this.races) {
-    //     if (raceName !== this.character.race) {
-    //       this.$set(this.character, 'subrace', undefined)
-    //       this.$bus.$emit('update_character', {key: 'subrace', value: null})
-    //     }
-    //     this.races.forEach((race, index) => {
-    //       if (race.name === raceName) {
-    //         this.subraces = race.subraces
-    //         return
-    //       }
-    //     })
-    //   }
-    // }
   },
 
   // Computed
@@ -181,17 +154,12 @@ export default {
         return `/characters/${this.user.uid}/${this.characterId}`
       }
     }
-
-    // races () {
-    //   return this.$store.state.gameData.races
-    // }
   },
 
   // Watch
   watch: {
     character (value) {
       if (value) {
-        // this.getSubraces(value.race)
         if (!value.abilityScores) {
           this.setAbilityScores()
         }
@@ -202,4 +170,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.xen-first-col {
+  width: 100px;
+}
 </style>

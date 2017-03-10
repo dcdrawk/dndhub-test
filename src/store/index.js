@@ -51,13 +51,18 @@ const store = new Vuex.Store({
       if (state.character.abilityScores) {
         Vue.set(state.character.abilityScores[data.score], data.key, data.value)
       }
-      // const path = data.path.split('/')
-      // path.forEach((prop) => {
+    },
 
-      // })
-      // Vue.set(state.character[path[0]], data.key, data.value)
-      // Vue.set(state.character, data.key, data.value)
-      // window.localStorage.setItem('character', window.JSON.stringify(state.character))
+    update_saving_throw (state, data) {
+      if (state.character.savingThrows) {
+        Vue.set(state.character.savingThrows[data.score], data.key, data.value)
+      }
+    },
+
+    update_skills (state, data) {
+      if (state.character.skills) {
+        Vue.set(state.character.skills[data.skill], data.key, data.value)
+      }
     },
 
     update_game_data (state, data) {

@@ -298,3 +298,14 @@ table {
   text-align: center;
   width: 40px;
 }
+
+.dnd-table-dense {
+  td {
+    padding-top: 0;
+    padding-bottom: 0;
+
+  }
+  .xen-input-container {
+    margin-bottom: 0;
+  }
+}
