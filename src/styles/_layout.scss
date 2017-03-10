@@ -13,6 +13,12 @@ body {
   // padding-left: 280px;
 }
 
+.disable-scroll {
+  position: fixed;
+  overflow-y: scroll;
+  width: 100%;
+}
+
 .xen-no-margin {
   margin: 0;
 }

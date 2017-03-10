@@ -4,9 +4,14 @@
     </xen-page-toolbar>
     <xen-tabs class="xen-page-tabs" theme="indigo" default-tab="Class Info" @change="$bus.$emit('autosize')">
       <div slot="Class Info">
+        <class-info-tab></class-info-tab>
         <!--<character-tab></character-tab>-->
       </div>
-      <div slot="Abilities">
+      <div slot="Features">
+        <features-tab></features-tab>
+        <!--<background-tab></background-tab>-->
+      </div>
+      <div slot="Proficiency">
         <!--<background-tab></background-tab>-->
       </div>
     </xen-tabs>
@@ -14,7 +19,8 @@
 </template>
 
 <script>
-// import CharacterTab from './CharacterTab'
+import ClassInfoTab from './ClassInfoTab'
+import FeaturesTab from './FeaturesTab'
 // import BackgroundTab from './BackgroundTab'
 
 export default {
@@ -23,6 +29,8 @@ export default {
 
   // Components
   components: {
+    ClassInfoTab,
+    FeaturesTab
     // CharacterTab,
     // BackgroundTab
   }
