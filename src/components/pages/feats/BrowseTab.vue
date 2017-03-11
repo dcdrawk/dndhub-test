@@ -36,6 +36,7 @@
       :title="modalTitle"
       @hide="showModal = false;"
       :fullscreen="true"
+      :medium="true"
       :back="true"
       :primary="true">
         <div class="dialog-description">{{ selectedItem.description }}</div>

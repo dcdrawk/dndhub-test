@@ -48,6 +48,7 @@
       :title="modalTitle"
       @hide="showModal = false; cancelEdit; edit = false;"
       :fullscreen="true"
+      :medium="true"
       :back="true"
       :primary="true">
         <div class="dialog-description" v-if="selectedItem">
@@ -95,6 +96,7 @@
     title="Custom Feat"
     @hide="showCustomModal = false;"
     :fullscreen="true"
+    :medium="true"
     :back="true"
     :primary="true">
       <!--Custom Input!-->
@@ -166,6 +168,7 @@ export default {
       this.$bus.$emit('toast', `${this.customItem.name} Added`)
       this.$nextTick(() => {
         this.$bus.$emit('back')
+        this.customItem = {}
       })
     },
 
