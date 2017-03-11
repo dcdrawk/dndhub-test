@@ -38,9 +38,7 @@
       :fullscreen="true"
       :back="true"
       :primary="true">
-        <div class="dialog-description">
-          {{ selectedItem.description }}
-        </div>
+        <div class="dialog-description">{{ selectedItem.description }}</div>
         <div slot="actions">
           <xen-button @click.native="$bus.$emit('back')" class="xen-color-primary">
             Close

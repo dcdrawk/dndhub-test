@@ -25,6 +25,7 @@
                 label="Email"
                 :value="email"
                 @input="email = $event"
+                autocapitalize="off"
                 :error="errors.first('email')"
                 v-validate="'required|email'"
                 data-vv-value-path="dataValue">

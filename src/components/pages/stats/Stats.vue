@@ -4,16 +4,16 @@
     </xen-page-toolbar>
     <xen-tabs class="xen-page-tabs" theme="indigo" default-tab="Ability Scores" @change="$bus.$emit('autosize')">
       <div slot="Ability Scores">
-        <ability-score-tab></ability-score-tab>
+        <ability-score-tab v-once></ability-score-tab>
       </div>
       <div slot="Saving Throws">
-        <saving-throws-tab></saving-throws-tab>
+        <saving-throws-tab v-if="show"></saving-throws-tab>
       </div>
       <div slot="Skills">
-        <skills-tab></skills-tab>
+        <skills-tab v-if="show"></skills-tab>
       </div>
       <div slot="Combat">
-        <combat-tab></combat-tab>
+        <combat-tab v-if="show"></combat-tab>
       </div>
     </xen-tabs>
   </div>
@@ -37,6 +37,18 @@ export default {
     SkillsTab,
     CombatTab
     // BackgroundTab
+  },
+
+  data () {
+    return {
+      show: false
+    }
+  },
+
+  created () {
+    this.$nextTick(() => {
+      this.show = true
+    })
   }
 }
 </script>

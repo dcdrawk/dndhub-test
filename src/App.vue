@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <sidenav></sidenav>
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <xen-toast :text="toastMsg"
     :show="showToast"
     @queue="showToast = false">
@@ -62,6 +64,17 @@ export default {
         this.$store.commit('push_item', {
           prop: data.key,
           key: snapshot.key,
+          value: data.value
+        })
+      })
+    })
+
+    this.$bus.$on('update_item', (data) => {
+      this.$firebase.database().ref(`${this.refPath}/${data.key}/${data.id}`)
+      .update(data.value).then(() => {
+        this.$store.commit('push_item', {
+          prop: data.key,
+          key: data.id,
           value: data.value
         })
       })
