@@ -1,6 +1,5 @@
 <template>
   <section class="dndhub-tab-content">
-    <!--BROWSE-->
     <div class="xen-data-table bordered hover" v-if="character">
       <table>
         <thead>
@@ -8,7 +7,7 @@
             <th class="xen-first-col text-left">
               Name
             </th>
-            <th class="xen-first-col text-left">
+            <th class="text-left">
               Damage
             </th>
             <th class="add-col text-center">
@@ -22,7 +21,7 @@
             @click="selectItem(item);">
               {{ item.name }}
             </td>
-            <td class="xen-first-col"
+            <td class="text-left"
             @click="selectItem(item);">
               {{ item.damage }}
             </td>
@@ -91,17 +90,15 @@
           class="xen-color-primary"
           name="selected_feat_description"
           :value="selectedItem.notes"
-          :disabled="true">-->
+          :disabled="true">
 
-          </xen-text-area>
+          </xen-text-area>-->
         </div>
         <div slot="actions">
           <xen-button @click.native="$bus.$emit('back')">
             Close
           </xen-button>
-          <xen-button @click.native="addItem(selectedItem); $bus.$emit('back');" class="xen-theme-blue" :raised="true">
-            Add
-          </xen-button>
+          <xen-button @click.native="addItem(selectedItem); $bus.$emit('back');" class="xen-theme-blue" :raised="true">Add</xen-button>
         </div>
       </xen-dialog>
     </div>
@@ -137,6 +134,7 @@ export default {
     },
 
     addItem (item) {
+      console.log(item)
       this.$bus.$emit('push_item', {
         key: this.field,
         value: item

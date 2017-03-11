@@ -49,6 +49,9 @@ const store = new Vuex.Store({
 
     push_item (state, data) {
       console.log(data)
+      if (!state.character[data.prop]) {
+        Vue.set(state.character, data.prop, {})
+      }
       Vue.set(state.character[data.prop], data.key, data.value)
     },
 

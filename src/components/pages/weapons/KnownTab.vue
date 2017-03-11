@@ -1,11 +1,10 @@
 <template>
   <section class="dndhub-tab-content">
-    <!--BROWSE-->
     <xen-card>
       <div class="xen-table-buttons">
         <xen-button class="xen-theme-blue" :raised="true"
         @click.native="showCustomModal = true">
-          Custom Weapon
+          New Weapon
         </xen-button>
       </div>
     </xen-card>
@@ -15,6 +14,9 @@
           <tr>
             <th class="xen-first-col text-left">
               Name
+            </th>
+            <th class="text-left">
+              Damage
             </th>
             <th class="add-col text-center">
               Remove
@@ -27,10 +29,14 @@
             @click="selectItem(item, index);">
               {{ item.name }}
             </td>
+            <td class="text-left"
+            @click="selectItem(item);">
+              {{ item.damage }}
+            </td>
             <td class="add-col text-center">
               <xen-icon-button class="xen-color-grey"
               icon="delete"
-              @click.native="removeItem(item, index);">
+              @click.native="removeItem(item, item.id);">
               </xen-icon-button>
             </td>
           </tr>
@@ -48,25 +54,68 @@
       :title="modalTitle"
       @hide="showModal = false; cancelEdit; edit = false;"
       :fullscreen="true"
+      :medium="true"
       :back="true"
       :primary="true">
         <div class="dialog-description" v-if="selectedItem">
           <xen-input label="Name"
           class="xen-color-primary"
-          name="selected_feat_name"
           :value="selectedItem.name"
+          @input="$set(selectedItem, 'name', $event)"
+          name="selected_weapon_name"
           v-validate="'required'"
           data-vv-value-path="dataValue"
-          :error="errors.first('selected_feat_name')"
-          :disabled="!edit"
-          @input="$set(selectedItem, 'name', $event);">
+          :error="errors.first('selected_weapon_name')"
+          :disabled="!edit">
           </xen-input>
-          <xen-text-area label="Description"
+
+          <xen-input label="Damage"
           class="xen-color-primary"
-          name="selected_feat_description"
-          :value="selectedItem.description"
-          :disabled="!edit"
-          @input="$set(selectedItem, 'description', $event);">
+          :value="selectedItem.damage"
+          @input="$set(selectedItem, 'damage', $event)"
+          :disabled="!edit">
+          </xen-input>
+
+          <xen-input label="Damage Type"
+          class="xen-color-primary"
+          :value="selectedItem.damageType"
+          @input="$set(selectedItem, 'damageType', $event)"
+          :disabled="!edit">
+          </xen-input>
+
+          <xen-input label="Weapon Type"
+          class="xen-color-primary"
+          :value="selectedItem.weaponType"
+          @input="$set(selectedItem, 'weaponType', $event)"
+          :disabled="!edit">
+          </xen-input>
+
+          <xen-input label="Weight"
+          class="xen-color-primary"
+          :value="selectedItem.weight"
+          @input="$set(selectedItem, 'weight', $event)"
+          :disabled="!edit">
+          </xen-input>
+
+          <xen-input label="Cost"
+          class="xen-color-primary"
+          :value="selectedItem.cost"
+          @input="$set(selectedItem, 'cost', $event)"
+          :disabled="!edit">
+          </xen-input>
+
+          <xen-chips class="xen-color-primary"
+          :chips="selectedItem.properties"
+          label="Properties"
+          @input="$set(selectedItem, 'properties', $event)"
+          :read-only="!edit">
+          </xen-chips>
+
+          <xen-text-area label="Notes"
+          class="xen-color-primary"
+          :value="selectedItem.notes"
+          @input="$set(selectedItem, 'notes', $event)"
+          :disabled="!edit">
           </xen-text-area>
         </div>
         <div slot="actions">
@@ -92,30 +141,69 @@
     <!-- New Item Dialog -->
     <xen-dialog
     :show="showCustomModal"
-    title="Custom Feat"
+    title="New Weapon"
     @hide="showCustomModal = false;"
     :fullscreen="true"
+    :medium="true"
     :back="true"
     :primary="true">
       <!--Custom Input!-->
       <div class="custom-item">
 
-        <xen-input label="Name"
-        class="xen-color-primary"
-        name="custom_feat_name"
-        :value="customItem.name"
-        v-validate="'required'"
-        data-vv-value-path="dataValue"
-        :error="errors.first('custom_feat_name')"
-        @input="$set(customItem, 'name', $event);">
-        </xen-input>
+        <div class="dialog-description" v-if="customItem">
+          <xen-input label="Name"
+          class="xen-color-primary"
+          :value="customItem.name"
+          @input="$set(customItem, 'name', $event)"
+          name="custom_weapon_name"
+          v-validate="'required'"
+          data-vv-value-path="dataValue"
+          :error="errors.first('custom_weapon_name')">
+          </xen-input>
 
-        <xen-text-area label="Description"
-        class="xen-color-primary"
-        name="custom_feat_description"
-        :value="customItem.description"
-        @input="$set(customItem, 'description', $event);">
-        </xen-text-area>
+          <xen-input label="Damage"
+          class="xen-color-primary"
+          :value="customItem.damage"
+          @input="$set(customItem, 'damage', $event)">
+          </xen-input>
+
+          <xen-input label="Damage Type"
+          class="xen-color-primary"
+          :value="customItem.damageType"
+          @input="$set(customItem, 'damageType', $event)">
+          </xen-input>
+
+          <xen-input label="Weapon Type"
+          class="xen-color-primary"
+          :value="customItem.weaponType"
+          @input="$set(customItem, 'weaponType', $event)">
+          </xen-input>
+
+          <xen-input label="Weight"
+          class="xen-color-primary"
+          :value="customItem.weight"
+          @input="$set(customItem, 'weight', $event)">
+          </xen-input>
+
+          <xen-input label="Cost"
+          class="xen-color-primary"
+          :value="customItem.cost"
+          @input="$set(customItem, 'cost', $event)">
+          </xen-input>
+
+          <xen-chips class="xen-color-primary"
+          :chips="customItem.properties"
+          label="Properties"
+          @input="$set(customItem, 'properties', $event)"
+          :read-only="false">
+          </xen-chips>
+
+          <xen-text-area label="Notes"
+          class="xen-color-primary"
+          :value="customItem.notes"
+          @input="$set(customItem, 'notes', $event)">
+          </xen-text-area>
+        </div>
       </div>
       <div slot="actions">
         <div>
@@ -140,7 +228,7 @@ export default {
   data () {
     return {
       customItem: {},
-      field: 'feats',
+      field: 'weapons',
       selectedItem: undefined,
       selectedItemId: undefined,
       showModal: false,
@@ -156,22 +244,23 @@ export default {
     async addCustomItem () {
       try {
         await this.$validator.validateAll()
+        this.$bus.$emit('push_item', {
+          key: this.field,
+          value: this.customItem
+        })
+        this.$bus.$emit('toast', `${this.customItem.name} Added`)
+        this.$nextTick(() => {
+          this.$bus.$emit('back')
+          this.customItem = {}
+        })
       } catch (error) {
-        console.error(error)
+        console.warn(error)
       }
-      this.$bus.$emit('push_item', {
-        key: this.field,
-        value: this.customItem
-      })
-      this.$bus.$emit('toast', `${this.customItem.name} Added`)
-      this.$nextTick(() => {
-        this.$bus.$emit('back')
-      })
     },
 
     selectItem (item, id) {
       this.selectedItem = Object.assign({}, item)
-      this.selectedItemId = id
+      this.selectedItemId = item.id
       this.modalTitle = item.name
       this.$nextTick(() => {
         this.showModal = true
@@ -201,7 +290,7 @@ export default {
         this.editCopy = this.selectedItem
         this.edit = false
       } catch (error) {
-        console.error(error)
+        console.warn(error)
       }
     },
 
@@ -216,10 +305,6 @@ export default {
 
   // Computed
   computed: {
-    // feats () {
-    //   return this.$store.state.gameData.feats
-    // },
-
     character () {
       return this.$store.state.character
     },

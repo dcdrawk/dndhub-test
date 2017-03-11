@@ -59,8 +59,11 @@ export default {
     })
 
     this.$bus.$on('push_item', (data) => {
+      console.log(data)
       const ref = this.$firebase.database().ref(`${this.refPath}/${data.key}`)
-      ref.push(data.value).then(snapshot => {
+      ref.push(data.value)
+      .then(snapshot => {
+        console.log(snapshot.key)
         this.$store.commit('push_item', {
           prop: data.key,
           key: snapshot.key,
@@ -70,6 +73,7 @@ export default {
     })
 
     this.$bus.$on('update_item', (data) => {
+      console.log(data)
       this.$firebase.database().ref(`${this.refPath}/${data.key}/${data.id}`)
       .update(data.value).then(() => {
         this.$store.commit('push_item', {
@@ -81,6 +85,7 @@ export default {
     })
 
     this.$bus.$on('remove_item', (data) => {
+      console.log(data)
       this.$store.commit('remove_item', {
         prop: data.key,
         id: data.id
