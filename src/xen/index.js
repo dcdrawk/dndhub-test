@@ -18,6 +18,7 @@ import XenSelect from '@/components/xen-components/Select'
 import XenDialog from '@/components/xen-components/Dialog'
 import XenTabs from '@/components/xen-components/Tabs'
 import XenTextArea from '@/components/xen-components/TextArea'
+import XenChips from '@/components/xen-components/Chips'
 
 // Vue.use(XenButton)
 export default class Xen {
@@ -78,6 +79,9 @@ export default class Xen {
   }, {
     selector: 'xen-text-area',
     name: XenTextArea
+  }, {
+    selector: 'xen-chips',
+    name: XenChips
   }]
 
   static register (Vue) {

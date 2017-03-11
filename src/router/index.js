@@ -16,6 +16,7 @@ import General from '@/components/pages/general/General'
 import Class from '@/components/pages/class/Class'
 import Stats from '@/components/pages/stats/Stats'
 import Feats from '@/components/pages/feats/Feats'
+import Weapons from '@/components/pages/weapons/Weapons'
 
 Vue.use(Router)
 
@@ -60,5 +61,9 @@ export default new Router({
     path: '/feats',
     name: 'Feats',
     component: Feats
+  }, {
+    path: '/weapons',
+    name: 'Weapons',
+    component: Weapons
   }]
 })
