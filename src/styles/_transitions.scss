@@ -16,3 +16,14 @@
   opacity: 0;
   transform: scaleX(0);
 }
+
+// Filter Toggle
+.filter-toggle-enter-active, .filter-toggle-leave-active {
+  transition: all 300ms $ease-out;
+  // transform: translateY(56px);
+}
+.filter-toggle-enter, .filter-toggle-leave-to {
+  // transition: all 300ms $ease-in;
+  // opacity: 0;
+  transform: translateY(0px);
+}

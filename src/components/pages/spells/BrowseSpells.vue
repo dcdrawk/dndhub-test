@@ -1,17 +1,14 @@
 <template>
   <section class="dndhub-tab-content">
-    <xen-card>
-      <xen-card-content class="xen-table-search">
-        <xen-input placeholder="Search Spells"
-        class="xen-color-primary"
-        :value="filter"
-        @input="filter = $event">
-        </xen-input>
-        <i v-if="filter" class="material-icons clear-input"
-        @click="filter = undefined">close</i>
-      </xen-card-content>
-    </xen-card>
-    <div class="xen-data-table bordered striped" v-if="character">
+    <spell-filters :search-filter="searchFilter"
+    :expand="showFilters"
+    @toggle="showFilters = $event"
+    @search="searchFilter = $event">
+    </spell-filters>
+
+    <div v-if="character"
+    class="xen-data-table bordered striped"
+    :class="{'show-filters': showFilters}">
       <table>
         <thead>
           <tr>
@@ -72,6 +69,7 @@
 <script>
 import ItemDialog from '../../dialogs/ItemDialog'
 import SpellInputs from './SpellInputs'
+import SpellFilters from './SpellFilters'
 
 export default {
   // Name
@@ -79,14 +77,17 @@ export default {
 
   components: {
     ItemDialog,
-    SpellInputs
+    SpellInputs,
+    SpellFilters
   },
 
   // Data
   data () {
     return {
       field: 'spells',
-      filter: undefined,
+      searchFilter: undefined,
+      classFilter: undefined,
+      showFilters: false,
       selectedItem: undefined,
       showDialog: false,
       dialogTitle: undefined
@@ -123,7 +124,7 @@ export default {
         return 0
       }).filter(item => {
         return this.filter
-        ? item.name.toLowerCase().includes(this.filter.toLowerCase())
+        ? item.name.toLowerCase().includes(this.searchFilter.toLowerCase())
         : true
       })
     },

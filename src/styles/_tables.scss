@@ -283,7 +283,50 @@ table {
   padding: 4px;
 }
 
-.xen-table-search {
+// --- Table Filters ---
+.dnd-filters {
+  position: relative;
+}
+.xen-table-filters {
+  display: flex;
+  z-index: 1;
+  .search-filter {
+
+    flex-grow: 1;
+  }
+  .xen-icon-button-container {
+    margin: 0;
+  }
+  .expand-button {
+    width: 48px;
+    position: relative;
+    top: -4px;
+    text-align: right;
+  }
+}
+
+.expand-filters {
+  position: absolute;
+  background-color: #EEEEEE;
+  width: 100%;
+  top: 0;
+  transform: translateY(56px);
+  border-bottom: 1px solid #bdbdbd;
+  z-index: 0;
+  &.xen-card-content {
+    padding-top: 12px;
+    padding-bottom: 0;
+  }
+  .xen-input-container,
+  input {
+    margin-bottom: 0;
+  }
+}
+
+
+
+.xen-table-search,
+.xen-table-filters {
   background-color: #EEEEEE;
   position: relative;
   &.xen-card-content {
@@ -300,7 +343,12 @@ table {
     top: 16px;
   }
 }
+
 .xen-data-table {
+  transition: transform 300ms $ease-out;
+  &.show-filters {
+    transform: translateY(56px);
+  }
   .xen-select-container {
     margin: 16px 0;
   }
