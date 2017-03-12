@@ -90,6 +90,9 @@ table {
     user-select: none;
     padding-top: 0;
     padding-bottom: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     &.text-center {
       text-align: center;
       padding-left: 8px;
@@ -108,7 +111,7 @@ table {
   th.xen-first-col,
   td.xen-first-col {
     padding-left: 24px;
-    padding-right: 0;
+    padding-right: 8px;
     text-align: left;
 
     @media screen and (max-width: $small-breakpoint) {

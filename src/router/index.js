@@ -17,6 +17,7 @@ import Class from '@/components/pages/class/Class'
 import Stats from '@/components/pages/stats/Stats'
 import Feats from '@/components/pages/feats/Feats'
 import Weapons from '@/components/pages/weapons/Weapons'
+import Armor from '@/components/pages/armor/Armor'
 
 Vue.use(Router)
 
@@ -65,5 +66,9 @@ export default new Router({
     path: '/weapons',
     name: 'Weapons',
     component: Weapons
+  }, {
+    path: '/armor',
+    name: 'Armor',
+    component: Armor
   }]
 })
