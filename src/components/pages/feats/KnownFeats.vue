@@ -1,6 +1,5 @@
 <template>
   <section class="dndhub-tab-content">
-    <!--BROWSE-->
     <xen-card>
       <div class="xen-table-buttons">
         <xen-button class="xen-theme-blue" :raised="true"
@@ -16,9 +15,7 @@
             <th class="xen-first-col text-left">
               Name
             </th>
-            <th class="add-col text-center">
-              Remove
-            </th>
+            <th class="add-col text-center"></th>
           </tr>
         </thead>
         <tbody>
@@ -114,7 +111,7 @@ export default {
     removeItem (item, id) {
       this.$bus.$emit('remove_item', {
         key: this.field,
-        id: id
+        id: item.id
       })
       this.$bus.$emit('toast', `${item.name} Removed`)
     }

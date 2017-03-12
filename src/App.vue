@@ -90,6 +90,7 @@ export default {
         prop: data.key,
         id: data.id
       })
+      console.log(`${this.refPath}/${data.key}/${data.id}`)
       this.$firebase.database().ref(`${this.refPath}/${data.key}/${data.id}`)
       .remove()
     })

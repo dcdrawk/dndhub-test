@@ -8,9 +8,7 @@
             <th class="xen-first-col text-left">
               Name
             </th>
-            <th class="add-col text-center">
-              Add
-            </th>
+            <th class="add-col text-center"></th>
           </tr>
         </thead>
         <tbody>
@@ -29,21 +27,44 @@
         </tbody>
       </table>
     </div>
+    <item-dialog
+    :show="showDialog"
+    :item="selectedItem"
+    :title="dialogTitle"
+    type="add"
+    :edit="false"
+    field="weapons"
+    @hide="showDialog = false"
+    @add="showDialog = false">
+      <feat-inputs
+      :item="selectedItem"
+      :edit="false"
+      @input="$set(selectedItem, $event.prop, $event.value)">
+      </feat-inputs>
+    </item-dialog>
   </section>
 </template>
 
 <script>
+import ItemDialog from '../../dialogs/ItemDialog'
+import FeatInputs from './FeatInputs'
+
 export default {
   // Name
-  name: 'browse-feats-tab',
+  name: 'browse-feats',
+
+  components: {
+    ItemDialog,
+    FeatInputs
+  },
 
   // Data
   data () {
     return {
       field: 'feats',
       selectedItem: undefined,
-      showModal: false,
-      modalTitle: undefined
+      showDialog: false,
+      dialogTitle: undefined
     }
   },
 
@@ -51,9 +72,9 @@ export default {
   methods: {
     selectItem (item) {
       this.selectedItem = item
-      this.modalTitle = item.name
+      this.dialogTitle = item.name
       this.$nextTick(() => {
-        this.showModal = true
+        this.showDialog = true
       })
     },
 
