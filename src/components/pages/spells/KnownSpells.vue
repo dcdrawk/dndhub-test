@@ -4,7 +4,7 @@
       <div class="xen-table-buttons">
         <xen-button class="xen-theme-blue" :raised="true"
         @click.native="showNewDialog()">
-          Add Armor
+          Add Spells
         </xen-button>
       </div>
     </xen-card>
@@ -16,7 +16,7 @@
               Name
             </th>
             <th class="text-left">
-              Armor Class
+              Spells Class
             </th>
             <th class="add-col text-center"></th>
           </tr>
@@ -40,7 +40,7 @@
           </tr>
           <tr v-if="items ? items.length === 0 : true">
             <td colspan="3" class="text-center">
-              No Armor Found
+              No Spells Found
             </td>
           </tr>
         </tbody>
@@ -52,37 +52,37 @@
     :item="selectedItem"
     :type="dialogType"
     :edit="edit"
-    field="armor"
+    field="spells"
     @hide="hideDialog()"
     @edit="edit = true;"
     @update="edit = false;"
     @cancel="selectedItem = $event; edit = false;">
-      <armor-inputs
+      <spells-inputs
       :item="selectedItem"
       :edit="edit"
       @input="$set(selectedItem, $event.prop, $event.value)">
-      </armor-inputs>
+      </spells-inputs>
     </item-dialog>
   </section>
 </template>
 
 <script>
 import ItemDialog from '../../dialogs/ItemDialog'
-import ArmorInputs from './ArmorInputs'
+import SpellInputs from './SpellInputs'
 
 export default {
   // Name
-  name: 'known-armor',
+  name: 'known-spells',
 
   components: {
     ItemDialog,
-    ArmorInputs
+    SpellInputs
   },
 
   // Data
   data () {
     return {
-      field: 'armor',
+      field: 'spells',
       selectedItem: undefined,
       showDialog: false,
       dialogTitle: undefined,

@@ -2,7 +2,7 @@
   <section class="dndhub-tab-content">
     <xen-card>
       <xen-card-content class="xen-table-search">
-        <xen-input placeholder="Search Armor"
+        <xen-input placeholder="Search Spells"
         class="xen-color-primary"
         :value="filter"
         @input="filter = $event">
@@ -16,11 +16,11 @@
         <thead>
           <tr>
             <th class="xen-first-col text-left">
-              Name
+              Spell
             </th>
-            <th class="text-left">
-              Armor Class
-            </th>
+            <!--<th class="text-left">
+              Spells Class
+            </th>-->
             <th class="add-col text-center"></th>
           </tr>
         </thead>
@@ -30,10 +30,10 @@
             @click="selectItem(item);">
               {{ item.name }}
             </td>
-            <td class="text-left"
+            <!--<td class="text-left"
             @click="selectItem(item);">
               {{ item.ac }}
-            </td>
+            </td>-->
             <td class="add-col text-center">
               <xen-icon-button class="xen-theme-blue"
               :raised="true" icon="add"
@@ -42,7 +42,7 @@
             </td>
           </tr>
           <tr v-if="items.length === 0">
-            <td colspan="3" class="text-center">No Armor Found</td>
+            <td colspan="3" class="text-center">No Spells Found</td>
           </tr>
         </tbody>
       </table>
@@ -59,10 +59,10 @@
       field="weapons"
       @hide="showDialog = false"
       @add="showDialog = false">
-        <armor-inputs
+        <spells-inputs
         :item="selectedItem"
         @input="$set(selectedItem, $event.prop, $event.value)">
-        </armor-inputs>
+        </spells-inputs>
       </item-dialog>
     </div>
 
@@ -71,7 +71,7 @@
 
 <script>
 import ItemDialog from '../../dialogs/ItemDialog'
-import ArmorInputs from './ArmorInputs'
+import SpellInputs from './SpellInputs'
 
 export default {
   // Name
@@ -79,13 +79,13 @@ export default {
 
   components: {
     ItemDialog,
-    ArmorInputs
+    SpellInputs
   },
 
   // Data
   data () {
     return {
-      field: 'armor',
+      field: 'spells',
       filter: undefined,
       selectedItem: undefined,
       showDialog: false,
