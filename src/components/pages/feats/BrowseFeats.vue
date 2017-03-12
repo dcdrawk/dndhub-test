@@ -29,26 +29,6 @@
         </tbody>
       </table>
     </div>
-    <!-- Selected Item Dialog -->
-    <div v-if="selectedItem">
-      <xen-dialog
-      :show="showModal"
-      :title="modalTitle"
-      @hide="showModal = false;"
-      :fullscreen="true"
-      :medium="true"
-      :back="true"
-      :primary="true">
-        <div class="dialog-description">{{ selectedItem.description }}</div>
-        <div slot="actions">
-          <xen-button @click.native="$bus.$emit('back')" class="xen-color-primary">
-            Close
-          </xen-button>
-        </div>
-      </xen-dialog>
-    </div>
-
-
   </section>
 </template>
 
@@ -63,7 +43,6 @@ export default {
       field: 'feats',
       selectedItem: undefined,
       showModal: false,
-      // showCustomModal: false,
       modalTitle: undefined
     }
   },
@@ -71,7 +50,6 @@ export default {
   // Methods
   methods: {
     selectItem (item) {
-      console.log(item)
       this.selectedItem = item
       this.modalTitle = item.name
       this.$nextTick(() => {
@@ -102,5 +80,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 </style>

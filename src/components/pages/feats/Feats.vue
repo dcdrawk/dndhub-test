@@ -5,10 +5,10 @@
     <xen-tabs class="xen-page-tabs" theme="indigo" default-tab="Known">
       <div slot="Known">
         <!--<character-tab></character-tab>-->
-        <known-tab></known-tab>
+        <known-feats></known-feats>
       </div>
       <div slot="Browse">
-        <browse-tab></browse-tab>
+        <browse-feats></browse-feats>
         <!--<background-tab></background-tab>-->
       </div>
     </xen-tabs>
@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import BrowseTab from './BrowseTab'
-import KnownTab from './KnownTab'
-// import BackgroundTab from './BackgroundTab'
+import BrowseFeats from './BrowseFeats'
+import KnownFeats from './KnownFeats'
+// import BackgroundFeats from './BackgroundFeats'
 
 export default {
   // Name
@@ -26,10 +26,10 @@ export default {
 
   // Components
   components: {
-    BrowseTab,
-    KnownTab
-    // CharacterTab,
-    // BackgroundTab
+    BrowseFeats,
+    KnownFeats
+    // CharacterFeats,
+    // BackgroundFeats
   }
 }
 </script>

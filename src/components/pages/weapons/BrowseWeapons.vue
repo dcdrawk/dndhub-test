@@ -97,6 +97,14 @@ export default {
 
   // Methods
   methods: {
+    addItem (item) {
+      this.$bus.$emit('push_item', {
+        key: this.field,
+        value: item
+      })
+      this.$bus.$emit('toast', `${item.name} Added`)
+    },
+
     selectItem (item) {
       console.log(item)
       this.selectedItem = item

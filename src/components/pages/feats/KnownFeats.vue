@@ -1,46 +1,42 @@
 <template>
   <section class="dndhub-tab-content">
+    <!--BROWSE-->
     <xen-card>
       <div class="xen-table-buttons">
         <xen-button class="xen-theme-blue" :raised="true"
         @click.native="showNewDialog()">
-          New Weapon
+          New Feat
         </xen-button>
       </div>
     </xen-card>
-    <div class="xen-data-table bordered hover striped" v-if="character">
+    <div class="xen-data-table bordered hover" v-if="character">
       <table>
-        <thead class="hide">
+        <thead>
           <tr>
             <th class="xen-first-col text-left">
               Name
             </th>
-            <th class="text-left">
-              Damage
+            <th class="add-col text-center">
+              Remove
             </th>
-            <th class="add-col text-center"></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in weapons">
+          <tr v-for="(item, index) in feats">
             <td class="xen-first-col"
-            @click="selectItem(item, index);">
-              {{ item.name }}
-            </td>
-            <td class="text-left"
             @click="selectItem(item);">
-              {{ item.damage }}
+              {{ item.name }}
             </td>
             <td class="add-col text-center">
               <xen-icon-button class="xen-color-grey"
               icon="delete"
-              @click.native="removeItem(item, item.id);">
+              @click.native="removeItem(item, index);">
               </xen-icon-button>
             </td>
           </tr>
-          <tr v-if="character.weapons ? Object.keys(character.weapons).length === 0 : true">
-            <td colspan="3" class="text-center">
-              No Weapons Found
+          <tr v-if="character.feats ? Object.keys(character.feats).length === 0 : true">
+            <td colspan="2" class="text-center">
+              No Feats Found.
             </td>
           </tr>
         </tbody>
@@ -52,23 +48,23 @@
     :item="selectedItem"
     :type="dialogType"
     :edit="edit"
-    field="weapons"
+    :field="field"
     @hide="hideDialog()"
     @edit="edit = true;"
     @update="edit = false;"
     @cancel="selectedItem = $event; edit = false;">
-      <weapon-inputs
+      <feat-inputs
       :item="selectedItem"
       :edit="edit"
       @input="$set(selectedItem, $event.prop, $event.value)">
-      </weapon-inputs>
+      </feat-inputs>
     </item-dialog>
   </section>
 </template>
 
 <script>
 import ItemDialog from '../../dialogs/ItemDialog'
-import WeaponInputs from './WeaponInputs'
+import FeatInputs from './FeatInputs'
 
 export default {
   // Name
@@ -76,13 +72,13 @@ export default {
 
   components: {
     ItemDialog,
-    WeaponInputs
+    FeatInputs
   },
 
   // Data
   data () {
     return {
-      field: 'weapons',
+      field: 'feats',
       selectedItem: undefined,
       showDialog: false,
       dialogTitle: undefined,
@@ -109,7 +105,7 @@ export default {
 
     showNewDialog () {
       this.dialogType = 'custom'
-      this.dialogTitle = 'New Weapon'
+      this.dialogTitle = 'New Feat'
       this.edit = true
       this.selectedItem = {}
       this.showDialog = true
@@ -126,22 +122,23 @@ export default {
 
   // Computed
   computed: {
-    character () {
-      return this.$store.state.character
-    },
-
-    weapons () {
-      let weapons = []
-      for (var i in this.character.weapons) {
-        let weapon = this.character.weapons[i]
-        weapon.id = i
-        weapons.push(weapon)
+    feats () {
+      // return this.$store.state.gameData.feats
+      let feats = []
+      for (var i in this.character.feats) {
+        let feat = this.character.feats[i]
+        feat.id = i
+        feats.push(feat)
       }
-      return weapons.sort((a, b) => {
+      return feats.sort((a, b) => {
         if (a.name < b.name) return -1
         if (a.name > b.name) return 1
         return 0
       })
+    },
+
+    character () {
+      return this.$store.state.character
     }
   }
 }
