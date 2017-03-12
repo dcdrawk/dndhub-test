@@ -28,7 +28,8 @@ table {
     color: rgba(0,0,0,.54);
     font-size: 12px;
     font-weight: 500;
-    height: 56px;
+    // height: 56px;
+    height: 36px;
     text-align: right;
     vertical-align: middle;
     white-space: nowrap;
@@ -87,8 +88,8 @@ table {
     border-top: none;
     padding-right: 56px;
     user-select: none;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 0;
+    padding-bottom: 0;
     &.text-center {
       text-align: center;
       padding-left: 8px;
@@ -279,6 +280,23 @@ table {
   padding: 4px;
 }
 
+.xen-table-search {
+  background-color: #EEEEEE;
+  position: relative;
+  &.xen-card-content {
+    padding-top: 12px;
+    padding-bottom: 0;
+  }
+  .xen-input-container,
+  input {
+    margin-bottom: 0;
+  }
+  .clear-input {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+  }
+}
 .xen-data-table {
   .xen-select-container {
     margin: 16px 0;
