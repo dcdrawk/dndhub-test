@@ -1,11 +1,15 @@
 <template>
-  <section class="dndhub-tab-content">
-    <spell-filters :search-filter="searchFilter"
+  <section>
+    <spell-filters :filter="spellFilters"
     :expand="showFilters"
     @toggle="showFilters = $event"
-    @search="searchFilter = $event">
+    @search="spellFilters.search = $event"
+    @clear-search="spellFilters.search = undefined"
+    @filter-class="spellFilters.class = $event"
+    @filter-school="spellFilters.school = $event"
+    @filter-level="spellFilters.level = $event"
+    @filter-limit="spellFilters.limit = $event">
     </spell-filters>
-
     <div v-if="character"
     class="xen-data-table bordered striped"
     :class="{'show-filters': showFilters}">
@@ -22,10 +26,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in items">
+          <tr v-for="(item, index) in items"
+          v-if="index >= spellFilters.limit * (page - 1) &&
+          index < spellFilters.limit * page">
             <td class="xen-first-col"
             @click="selectItem(item);">
-              {{ item.name }}
+              <div>{{ item.name }}</div>
+              <div class="secondary-text">{{ item.level }} {{ item.school }}</div>
             </td>
             <!--<td class="text-left"
             @click="selectItem(item);">
@@ -45,6 +52,13 @@
       </table>
     </div>
 
+    <dnd-pagination v-if="character"
+    :page="page"
+    :total="Math.ceil(items.length / spellFilters.limit)"
+    @input="spellFilters.page = $event">
+
+    </dnd-pagination>
+
     <!-- Selected Item Dialog -->
     <div>
       <item-dialog
@@ -56,10 +70,10 @@
       field="weapons"
       @hide="showDialog = false"
       @add="showDialog = false">
-        <spells-inputs
+        <spell-inputs
         :item="selectedItem"
         @input="$set(selectedItem, $event.prop, $event.value)">
-        </spells-inputs>
+        </spell-inputs>
       </item-dialog>
     </div>
 
@@ -68,6 +82,7 @@
 
 <script>
 import ItemDialog from '../../dialogs/ItemDialog'
+import DndPagination from '../../pagination/Pagination'
 import SpellInputs from './SpellInputs'
 import SpellFilters from './SpellFilters'
 
@@ -78,15 +93,24 @@ export default {
   components: {
     ItemDialog,
     SpellInputs,
-    SpellFilters
+    SpellFilters,
+    DndPagination
   },
 
   // Data
   data () {
     return {
       field: 'spells',
-      searchFilter: undefined,
-      classFilter: undefined,
+      spellFilters: {
+        search: undefined,
+        class: 'All',
+        school: 'All',
+        level: 'All',
+        limit: 20,
+        page: 1
+      },
+      // searchFilter: undefined,
+      // classFilter: 'All',
       showFilters: false,
       selectedItem: undefined,
       showDialog: false,
@@ -116,6 +140,13 @@ export default {
 
   // Computed
   computed: {
+
+    page () {
+      return this.spellFilters.page <= Math.ceil(this.items.length / this.spellFilters.limit)
+      ? this.spellFilters.page
+      : Math.ceil(this.items.length / this.spellFilters.limit)
+    },
+
     items () {
       return this.$store.state.gameData[this.field]
       .sort((a, b) => {
@@ -123,8 +154,20 @@ export default {
         if (a.name > b.name) return 1
         return 0
       }).filter(item => {
-        return this.filter
-        ? item.name.toLowerCase().includes(this.searchFilter.toLowerCase())
+        return this.spellFilters.class && this.spellFilters.class !== 'All'
+        ? item.class.toLowerCase().includes(this.spellFilters.class.toLowerCase())
+        : true
+      }).filter(item => {
+        return this.spellFilters.school && this.spellFilters.school !== 'All'
+        ? item.school.toLowerCase().includes(this.spellFilters.school.toLowerCase())
+        : true
+      }).filter(item => {
+        return this.spellFilters.search
+        ? item.name.toLowerCase().includes(this.spellFilters.search.toLowerCase())
+        : true
+      }).filter(item => {
+        return this.spellFilters.level && this.spellFilters.level !== 'All'
+        ? item.level.toLowerCase().includes(this.spellFilters.level.toLowerCase())
         : true
       })
     },

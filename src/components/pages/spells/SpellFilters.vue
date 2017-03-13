@@ -4,12 +4,12 @@
       <div class="search-filter">
         <xen-input placeholder="Search Spells"
         class="xen-color-primary"
-        :value="filter"
-        :debounce="500"
+        :value="filter.search"
+        :debounce="300"
         @input="$emit('search', $event)">
         </xen-input>
-        <i v-if="filter" class="material-icons clear-input"
-        @click="filter = undefined">close</i>
+        <i v-if="filter.search" class="material-icons clear-input"
+        @click="$emit('clear-search')">close</i>
       </div>
       <div class="expand-button">
         <xen-icon-button icon="keyboard_arrow_down"
@@ -20,15 +20,49 @@
     </xen-card-content>
     <transition name="filter-toggle">
       <xen-card-content v-if="expand" class="expand-filters">
-        <div class="search-filter">
-          <xen-input placeholder="Search Spells"
-          class="xen-color-primary"
-          :value="filter"
-          :debounce="500"
-          @input="$emit('search', $event)">
-          </xen-input>
-          <i v-if="filter" class="material-icons clear-input"
-          @click="filter = undefined">close</i>
+        <div class="row xen-color-primary">
+          <div class="col-xs-6">
+
+            <xen-select label="Class"
+            class="xen-no-margin"
+            :options="classOptions"
+            @input="$emit('filter-class', $event)"
+            :value="filter.class">
+            </xen-select>
+
+          </div>
+
+          <div class="col-xs-6">
+
+            <xen-select label="School"
+            class="xen-no-margin"
+            :options="schoolOptions"
+            @input="$emit('filter-school', $event)"
+            :value="filter.school">
+            </xen-select>
+
+          </div>
+        </div>
+        <div class="row xen-color-primary">
+          <div class="col-xs-6">
+
+            <xen-select label="Level"
+            :options="levelOptions"
+            @input="$emit('filter-level', $event)"
+            :value="filter.level">
+            </xen-select>
+
+          </div>
+
+          <div class="col-xs-6">
+
+            <xen-select label="Per Page"
+            :options="limitOptions"
+            @input="$emit('filter-limit', $event)"
+            :value="filter.limit">
+            </xen-select>
+
+          </div>
         </div>
       </xen-card-content>
     </transition>
@@ -45,6 +79,11 @@ export default {
 
   props: [
     'filter',
+    'search-filter',
+    'class-filter',
+    'school-filter',
+    'level-filter',
+    'limit-filter',
     'expand'
   ],
 
@@ -56,6 +95,31 @@ export default {
   // Data
   data () {
     return {
+      classOptions: [
+        'All',
+        'Bard',
+        'Cleric',
+        'Druid',
+        'Paladin',
+        'Sorcerer',
+        'Ranger',
+        'Ritual Caster',
+        'Warlock',
+        'Wizard'
+      ],
+      schoolOptions: [
+        'All',
+        'Abjuration',
+        'Conjuration',
+        'Divination',
+        'Enchantment',
+        'Evocation',
+        'Illusion',
+        'Necromancy',
+        'Transmutation'
+      ],
+      levelOptions: ['All', 'Cantrip', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      limitOptions: [20, 50, 100]
     //   field: 'spells',
     //   filter: undefined,
     //   selectedItem: undefined,

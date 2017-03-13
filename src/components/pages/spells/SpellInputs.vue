@@ -1,7 +1,22 @@
 <template>
-  <div v-if="item" class="xen-color-primary">
+  <div v-if="item" class="spell-container">
+    <div class="spell-info">
+      {{ item.name }}
+    </div>
+    <div class="spell-casting-time">
+      {{ item.casting_time }}
+    </div>
+    <div class="spell-range">
+      {{ item.range }}
+    </div>
+    <div class="spell-components">
+      {{ item.components }}
+    </div>
+    <div class="spell-description">
+      {{ item.desc }}
+    </div>
     <!-- Name -->
-    <xen-input label="Name"
+    <!--<xen-input label="Name"
     :value="item.name"
     @input="$emit('input', {
       prop: 'name',
@@ -12,57 +27,57 @@
     data-vv-value-path="dataValue"
     :error="errors.first('selected_weapon_name')"
     :disabled="edit === false">
-    </xen-input>
+    </xen-input>-->
 
     <!-- Armor Class -->
-    <xen-input label="Armor Class"
+    <!--<xen-input label="Armor Class"
     :value="item.ac"
     @input="$emit('input', {
       prop: 'ac',
       value: $event
     })"
     :disabled="edit === false">
-    </xen-input>
+    </xen-input>-->
 
     <!-- Armor Type -->
-    <xen-input label="Armor Type"
+    <!--<xen-input label="Armor Type"
     :value="item.armorType"
     @input="$emit('input', {
       prop: 'armorType',
       value: $event
     })"
     :disabled="edit === false">
-    </xen-input>
+    </xen-input>-->
 
     <!-- Cost -->
-    <xen-input label="Cost"
+    <!--<xen-input label="Cost"
     :value="item.cost"
     @input="$emit('input', {
       prop: 'cost',
       value: $event
     })"
     :disabled="edit === false">
-    </xen-input>
+    </xen-input>-->
 
     <!-- Properties -->
-    <xen-chips label="Properties"
+    <!--<xen-chips label="Properties"
     :chips="item.properties"
     @input="$emit('input', {
       prop: 'properties',
       value: $event
     })"
     :read-only="edit === false">
-    </xen-chips>
+    </xen-chips>-->
 
     <!-- Notes -->
-    <xen-text-area label="Notes"
+    <!--<xen-text-area label="Notes"
     :value="item.notes"
     @input="$emit('input', {
       prop: 'notes',
       value: $event
     })"
     :disabled="edit === false">
-    </xen-text-area>
+    </xen-text-area>-->
   </div>
 </template>
 

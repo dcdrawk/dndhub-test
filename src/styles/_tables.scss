@@ -9,6 +9,7 @@ table {
   @extend .whiteframe-z1;
   background-color: #fff;
   width: 100%;
+  margin-bottom: 40px;
 
   .xen-data-table-header {
     height: 64px;
@@ -286,10 +287,15 @@ table {
 // --- Table Filters ---
 .dnd-filters {
   position: relative;
+  z-index: 0;
+  &.xen-card {
+    box-shadow: none;
+  }
 }
 .xen-table-filters {
   display: flex;
   z-index: 1;
+  // border-bottom: 1px solid #bdbdbd;
   .search-filter {
 
     flex-grow: 1;
@@ -311,10 +317,12 @@ table {
   width: 100%;
   top: 0;
   transform: translateY(56px);
-  border-bottom: 1px solid #bdbdbd;
-  z-index: 0;
+  backface-visibility: none;
+  // border-bottom: 1px solid #bdbdbd;
+  // z-index: -1;
+  height: 100px;
   &.xen-card-content {
-    padding-top: 12px;
+    padding-top: 0;
     padding-bottom: 0;
   }
   .xen-input-container,
@@ -339,7 +347,7 @@ table {
   }
   .clear-input {
     position: absolute;
-    right: 16px;
+    right: 64px;
     top: 16px;
   }
 }
@@ -347,7 +355,7 @@ table {
 .xen-data-table {
   transition: transform 300ms $ease-out;
   &.show-filters {
-    transform: translateY(56px);
+    transform: translateY(100px);
   }
   .xen-select-container {
     margin: 16px 0;

@@ -24,6 +24,6 @@
 }
 .filter-toggle-enter, .filter-toggle-leave-to {
   // transition: all 300ms $ease-in;
-  // opacity: 0;
-  transform: translateY(0px);
+  opacity: 0;
+  transform: translateY(-50px);
 }
