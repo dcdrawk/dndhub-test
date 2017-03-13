@@ -1,6 +1,6 @@
 .dialog-description {
   width: 100%;
-  white-space: pre-line;
+  // white-space: pre-line;
   padding-top: 16px;
   ul {
     margin-bottom: 0;
@@ -13,5 +13,18 @@
         border-bottom: none;
       }
     }
+  }
+}
+.dnd-pre-line {
+  white-space: pre-line;
+}
+
+.dnd-no-wrap {
+  white-space: nowrap;
+}
+
+.dnd-spell-dialog {
+  .xen-dialog.fullscreen.xen-dialog.has-actions .xen-dialog-content {
+    padding: 0;
   }
 }

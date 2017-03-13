@@ -61,7 +61,7 @@
 
     <!-- Selected Item Dialog -->
     <div>
-      <item-dialog
+      <item-dialog class="dnd-spell-dialog"
       :show="showDialog"
       :item="selectedItem"
       :title="dialogTitle"
@@ -109,8 +109,6 @@ export default {
         limit: 20,
         page: 1
       },
-      // searchFilter: undefined,
-      // classFilter: 'All',
       showFilters: false,
       selectedItem: undefined,
       showDialog: false,

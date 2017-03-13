@@ -59,6 +59,7 @@ body {
 
 .dndhub-tab-content {
   max-width: 1200px;
+  min-height: calc(100vh - 96px);
   width: 100%;
   margin: auto;
   padding: 16px;

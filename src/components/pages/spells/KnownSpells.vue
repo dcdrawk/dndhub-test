@@ -1,36 +1,49 @@
 <template>
-  <section class="dndhub-tab-content">
-    <xen-card>
+  <section>
+    <spell-filters :filter="spellFilters"
+    :expand="showFilters"
+    @toggle="showFilters = $event"
+    @search="spellFilters.search = $event"
+    @clear-search="spellFilters.search = undefined"
+    @filter-class="spellFilters.class = $event"
+    @filter-school="spellFilters.school = $event"
+    @filter-level="spellFilters.level = $event"
+    @filter-limit="spellFilters.limit = $event">
+    </spell-filters>
+    <!--<xen-card>
       <div class="xen-table-buttons">
         <xen-button class="xen-theme-blue" :raised="true"
         @click.native="showNewDialog()">
           Add Spells
         </xen-button>
       </div>
-    </xen-card>
-    <div class="xen-data-table bordered striped" v-if="character">
+    </xen-card>-->
+    <div class="xen-data-table bordered striped"
+    :class="{'show-filters': showFilters}"
+     v-if="character">
       <table>
         <thead class="hide">
           <tr>
             <th class="xen-first-col text-left">
-              Name
+              Spell
             </th>
-            <th class="text-left">
+            <!--<th class="text-left">
               Spells Class
-            </th>
+            </th>-->
             <th class="add-col text-center"></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in items">
             <td class="xen-first-col"
-            @click="selectItem(item, index);">
-              {{ item.name }}
+            @click="selectItem(item);">
+              <div>{{ item.name }}</div>
+              <div class="secondary-text">{{ item.level }} {{ item.school }}</div>
             </td>
-            <td class="text-left"
+            <!--<td class="text-left"
             @click="selectItem(item);">
               {{ item.ac }}
-            </td>
+            </td>-->
             <td class="add-col text-center">
               <xen-icon-button class="xen-color-grey"
               icon="delete"
@@ -46,7 +59,7 @@
         </tbody>
       </table>
     </div>
-    <item-dialog
+    <item-dialog class="dnd-spell-dialog"
     :show="showDialog"
     :title="dialogTitle"
     :item="selectedItem"
@@ -54,14 +67,14 @@
     :edit="edit"
     field="spells"
     @hide="hideDialog()"
-    @edit="edit = true;"
-    @update="edit = false;"
+    @edit=" edit = true;"
+    @update="dialogTitle = selectedItem.name; edit = false;"
     @cancel="selectedItem = $event; edit = false;">
-      <spells-inputs
+      <spell-inputs
       :item="selectedItem"
       :edit="edit"
       @input="$set(selectedItem, $event.prop, $event.value)">
-      </spells-inputs>
+      </spell-inputs>
     </item-dialog>
   </section>
 </template>
@@ -69,6 +82,7 @@
 <script>
 import ItemDialog from '../../dialogs/ItemDialog'
 import SpellInputs from './SpellInputs'
+import SpellFilters from './SpellFilters'
 
 export default {
   // Name
@@ -76,7 +90,8 @@ export default {
 
   components: {
     ItemDialog,
-    SpellInputs
+    SpellInputs,
+    SpellFilters
   },
 
   // Data
@@ -87,7 +102,16 @@ export default {
       showDialog: false,
       dialogTitle: undefined,
       dialogType: 'edit',
-      edit: false
+      edit: false,
+      spellFilters: {
+        search: undefined,
+        class: 'All',
+        school: 'All',
+        level: 'All',
+        limit: 20,
+        page: 1
+      },
+      showFilters: false
     }
   },
 
@@ -141,6 +165,22 @@ export default {
         if (a.name < b.name) return -1
         if (a.name > b.name) return 1
         return 0
+      }).filter(item => {
+        return this.spellFilters.class && this.spellFilters.class !== 'All'
+        ? item.class.toLowerCase().includes(this.spellFilters.class.toLowerCase())
+        : true
+      }).filter(item => {
+        return this.spellFilters.school && this.spellFilters.school !== 'All'
+        ? item.school.toLowerCase().includes(this.spellFilters.school.toLowerCase())
+        : true
+      }).filter(item => {
+        return this.spellFilters.search
+        ? item.name.toLowerCase().includes(this.spellFilters.search.toLowerCase())
+        : true
+      }).filter(item => {
+        return this.spellFilters.level && this.spellFilters.level !== 'All'
+        ? item.level.toLowerCase().includes(this.spellFilters.level.toLowerCase())
+        : true
       })
     }
   }

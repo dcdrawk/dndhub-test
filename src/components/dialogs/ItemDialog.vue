@@ -7,7 +7,7 @@
   :medium="true"
   :back="true"
   :primary="true">
-    <div class="dialog-description">
+    <div class="item-dialog-container">
       <slot></slot>
     </div>
 
