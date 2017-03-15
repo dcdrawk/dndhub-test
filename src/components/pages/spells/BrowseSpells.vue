@@ -148,12 +148,7 @@ export default {
     },
 
     total () {
-      // if (this.items) {
-      console.log(this.items.length)
       return this.items.length
-      // } else {
-        // return 1
-      // }
     },
 
     items () {

@@ -6,7 +6,7 @@
       <div slot="My Groups">
         <known-spells></known-spells>
       </div>
-      <div slot="Browse">
+      <div slot="New Group">
         <browse-spells></browse-spells>
       </div>
     </xen-tabs>
@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import BrowseSpells from './BrowseSpells'
-import KnownSpells from './KnownSpells'
+import MyGroups from './MyGroups'
+import NewGroup from './NewGroup'
 
 export default {
   // Name
@@ -23,8 +23,8 @@ export default {
 
   // Components
   components: {
-    BrowseSpells,
-    KnownSpells
+    MyGroups,
+    NewGroup
   }
 }
 </script>
