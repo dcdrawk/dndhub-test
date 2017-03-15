@@ -10,7 +10,6 @@
     @filter-level="spellFilters.level = $event"
     @filter-limit="spellFilters.limit = $event">
     </spell-filters>
-    <!--{{ items }}-->
     <div v-if="character"
     class="xen-data-table bordered striped"
     :class="{'show-filters': showFilters}">
@@ -30,7 +29,7 @@
           <!--<tr v-for="(item, index) in items"
           v-if="index >= spellFilters.limit * (page - 1) &&
           index < spellFilters.limit * page">-->
-          <tr v-for="(item, index) in paginatedItems">
+          <tr v-for="(item, index) in items">
             <td class="xen-first-col"
             @click="selectItem(item);">
               <div>{{ item.name }}</div>
@@ -148,12 +147,7 @@ export default {
     },
 
     total () {
-      // if (this.items) {
-      console.log(this.items.length)
-      return this.items.length
-      // } else {
-        // return 1
-      // }
+      return this.$store.state.gameData[this.field].length
     },
 
     items () {
@@ -178,11 +172,7 @@ export default {
         return this.spellFilters.level && this.spellFilters.level !== 'All'
         ? item.level.toLowerCase().includes(this.spellFilters.level.toLowerCase())
         : true
-      })
-    },
-
-    paginatedItems () {
-      return this.items.slice(this.spellFilters.limit * (this.spellFilters.page - 1), this.spellFilters.limit * this.spellFilters.page)
+      }).slice(this.spellFilters.limit * (this.spellFilters.page - 1), this.spellFilters.limit * this.spellFilters.page)
     },
 
     character () {

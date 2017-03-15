@@ -20,6 +20,7 @@ import Weapons from '@/components/pages/weapons/Weapons'
 import Armor from '@/components/pages/armor/Armor'
 import Spells from '@/components/pages/spells/Spells'
 
+import Groups from '@/components/pages/groups/Groups'
 Vue.use(Router)
 
 export default new Router({
@@ -75,5 +76,9 @@ export default new Router({
     path: '/spells',
     name: 'Spells',
     component: Spells
+  }, {
+    path: '/groups',
+    name: 'Groups',
+    component: Groups
   }]
 })

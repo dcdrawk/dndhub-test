@@ -39,7 +39,7 @@
           @click.native="deleteCharacter(tempCharacterId)">Delete</xen-button>
         </div>
       </xen-dialog>
-      {{ character }} {{ tempCharacter }}
+      <!--{{ character }} {{ tempCharacter }}-->
     </div>
   </div>
 </template>
@@ -75,7 +75,7 @@ export default {
     selectCharacter (character, id) {
       character.id = id
       this.$bus.$emit('set_character', id)
-      // this.$store.commit('set_character', character)
+      this.$store.commit('set_character', character)
     },
 
     async deleteCharacter (characterId) {

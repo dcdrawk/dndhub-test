@@ -71,8 +71,8 @@
             <xen-divider></xen-divider>
 
             <xen-list :dense="true">
-              <router-link to="/profile">
-                <xen-list-item text="Groups" :bold="true" @click.native="$bus.$emit('close-sidenav'); signOut()"></xen-list-item>
+              <router-link to="/groups">
+                <xen-list-item text="Groups" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
               </router-link>
             </xen-list>
           </div>

@@ -10,12 +10,19 @@
     @filter-level="spellFilters.level = $event"
     @filter-limit="spellFilters.limit = $event">
     </spell-filters>
-    <!--{{ items }}-->
-    <div v-if="character"
-    class="xen-data-table bordered striped"
-    :class="{'show-filters': showFilters}">
+    <!--<xen-card>
+      <div class="xen-table-buttons">
+        <xen-button class="xen-theme-blue" :raised="true"
+        @click.native="showNewDialog()">
+          Add Spells
+        </xen-button>
+      </div>
+    </xen-card>-->
+    <div class="xen-data-table bordered striped"
+    :class="{'show-filters': showFilters}"
+     v-if="character">
       <table>
-        <thead>
+        <thead class="hide">
           <tr>
             <th class="xen-first-col text-left">
               Spell
@@ -27,10 +34,7 @@
           </tr>
         </thead>
         <tbody>
-          <!--<tr v-for="(item, index) in items"
-          v-if="index >= spellFilters.limit * (page - 1) &&
-          index < spellFilters.limit * page">-->
-          <tr v-for="(item, index) in paginatedItems">
+          <tr v-for="(item, index) in items">
             <td class="xen-first-col"
             @click="selectItem(item);">
               <div>{{ item.name }}</div>
@@ -41,68 +45,64 @@
               {{ item.ac }}
             </td>-->
             <td class="add-col text-center">
-              <xen-icon-button class="xen-theme-blue"
-              :raised="true" icon="add"
-              @click.native="addItem(item);">
+              <xen-icon-button class="xen-color-grey"
+              icon="delete"
+              @click.native="removeItem(item, item.id);">
               </xen-icon-button>
             </td>
           </tr>
-          <tr v-if="items.length === 0">
-            <td colspan="3" class="text-center">No Spells Found</td>
+          <tr v-if="items ? items.length === 0 : true">
+            <td colspan="3" class="text-center">
+              No Spells Found
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <dnd-pagination v-if="character"
-    :page="page"
-    :total="Math.ceil(total / spellFilters.limit)"
-    @input="spellFilters.page = $event">
-
-    </dnd-pagination>
-
-    <!-- Selected Item Dialog -->
-    <div>
-      <item-dialog class="dnd-spell-dialog"
-      :show="showDialog"
+    <item-dialog class="dnd-spell-dialog"
+    :show="showDialog"
+    :title="dialogTitle"
+    :item="selectedItem"
+    :type="dialogType"
+    :edit="edit"
+    field="spells"
+    @hide="hideDialog()"
+    @edit=" edit = true;"
+    @update="dialogTitle = selectedItem.name; edit = false;"
+    @cancel="selectedItem = $event; edit = false;">
+      <spell-inputs
       :item="selectedItem"
-      :title="dialogTitle"
-      type="add"
-      :edit="false"
-      field="weapons"
-      @hide="showDialog = false"
-      @add="showDialog = false">
-        <spell-inputs
-        :item="selectedItem"
-        @input="$set(selectedItem, $event.prop, $event.value)">
-        </spell-inputs>
-      </item-dialog>
-    </div>
-
+      :edit="edit"
+      @input="$set(selectedItem, $event.prop, $event.value)">
+      </spell-inputs>
+    </item-dialog>
   </section>
 </template>
 
 <script>
 import ItemDialog from '../../dialogs/ItemDialog'
-import DndPagination from '../../pagination/Pagination'
 import SpellInputs from './SpellInputs'
 import SpellFilters from './SpellFilters'
 
 export default {
   // Name
-  name: 'browse-feats-tab',
+  name: 'known-spells',
 
   components: {
     ItemDialog,
     SpellInputs,
-    SpellFilters,
-    DndPagination
+    SpellFilters
   },
 
   // Data
   data () {
     return {
       field: 'spells',
+      selectedItem: undefined,
+      showDialog: false,
+      dialogTitle: undefined,
+      dialogType: 'edit',
+      edit: false,
       spellFilters: {
         search: undefined,
         class: 'All',
@@ -111,54 +111,57 @@ export default {
         limit: 20,
         page: 1
       },
-      showFilters: false,
-      selectedItem: undefined,
-      showDialog: false,
-      dialogTitle: undefined
+      showFilters: false
     }
   },
 
   // Methods
   methods: {
-    addItem (item) {
-      this.$bus.$emit('push_item', {
-        key: this.field,
-        value: item
-      })
-      this.$bus.$emit('toast', `${item.name} Added`)
-    },
-
-    selectItem (item) {
-      console.log(item)
-      this.selectedItem = item
+    selectItem (item, id) {
+      this.dialogType = 'edit'
+      this.selectedItem = Object.assign({}, item)
       this.dialogTitle = item.name
       this.$nextTick(() => {
         this.showDialog = true
       })
+    },
+
+    hideDialog () {
+      this.edit = false
+      this.showDialog = false
+    },
+
+    showNewDialog () {
+      this.dialogType = 'custom'
+      this.dialogTitle = 'New Weapon'
+      this.edit = true
+      this.selectedItem = {}
+      this.showDialog = true
+    },
+
+    removeItem (item, id) {
+      this.$bus.$emit('remove_item', {
+        key: this.field,
+        id: id
+      })
+      this.$bus.$emit('toast', `${item.name} Removed`)
     }
   },
 
   // Computed
   computed: {
-
-    page () {
-      return this.spellFilters.page <= Math.ceil(this.total / this.spellFilters.limit)
-      ? this.spellFilters.page
-      : Math.ceil(this.total / this.spellFilters.limit)
-    },
-
-    total () {
-      // if (this.items) {
-      console.log(this.items.length)
-      return this.items.length
-      // } else {
-        // return 1
-      // }
+    character () {
+      return this.$store.state.character
     },
 
     items () {
-      return this.$store.state.gameData[this.field]
-      .sort((a, b) => {
+      let items = []
+      for (var i in this.character[this.field]) {
+        let item = this.character[this.field][i]
+        item.id = i
+        items.push(item)
+      }
+      return items.sort((a, b) => {
         if (a.name < b.name) return -1
         if (a.name > b.name) return 1
         return 0
@@ -179,18 +182,13 @@ export default {
         ? item.level.toLowerCase().includes(this.spellFilters.level.toLowerCase())
         : true
       })
-    },
-
-    paginatedItems () {
-      return this.items.slice(this.spellFilters.limit * (this.spellFilters.page - 1), this.spellFilters.limit * this.spellFilters.page)
-    },
-
-    character () {
-      return this.$store.state.character
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+.custom-item {
+  padding-top: 16px;
+}
 </style>
