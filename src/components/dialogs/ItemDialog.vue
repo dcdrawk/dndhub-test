@@ -78,6 +78,8 @@ export default {
   // Methods
   methods: {
     addItem (item) {
+      console.log(item)
+      console.log(this.field)
       this.$bus.$emit('push_item', {
         key: this.field,
         value: item

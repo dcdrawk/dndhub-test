@@ -6,10 +6,10 @@
         class="xen-color-primary"
         :value="filter.search"
         :debounce="300"
-        @input="$emit('search', $event)">
+        @input="updateFilter('search', $event)">
         </xen-input>
         <i v-if="filter.search" class="material-icons clear-input"
-        @click="$emit('clear-search')">close</i>
+        @click="updateFilter('search', '')">close</i>
       </div>
       <div class="expand-button">
         <xen-icon-button icon="keyboard_arrow_down"
@@ -25,9 +25,9 @@
 
             <xen-select label="Class"
             class="xen-no-margin"
+            :value="filter.class || 'All'"
             :options="classOptions"
-            @input="$emit('filter-class', $event)"
-            :value="filter.class">
+            @input="updateFilter('class', $event)">
             </xen-select>
 
           </div>
@@ -36,9 +36,9 @@
 
             <xen-select label="School"
             class="xen-no-margin"
+            :value="filter.school || 'All'"
             :options="schoolOptions"
-            @input="$emit('filter-school', $event)"
-            :value="filter.school">
+            @input="updateFilter('school', $event)">
             </xen-select>
 
           </div>
@@ -47,9 +47,9 @@
           <div class="col-xs-6">
 
             <xen-select label="Level"
+            :value="filter.level || 'All'"
             :options="levelOptions"
-            @input="$emit('filter-level', $event)"
-            :value="filter.level">
+            @input="updateFilter('level', $event)">
             </xen-select>
 
           </div>
@@ -57,9 +57,9 @@
           <div class="col-xs-6">
 
             <xen-select label="Per Page"
+            :value="filter.limit || 20"
             :options="limitOptions"
-            @input="$emit('filter-limit', $event)"
-            :value="filter.limit">
+            @input="updateFilter('limit', $event)">
             </xen-select>
 
           </div>
@@ -128,8 +128,32 @@ export default {
     }
   },
 
+  created () {
+    if (this.character) {
+      this.checkFilters()
+    }
+  },
+
   // Methods
   methods: {
+    checkFilters () {
+      if (this.character.spellFilters) {
+        return
+      } else {
+        this.$bus.$emit('update_character', {key: 'spellFilters', value: {}})
+      }
+    },
+
+    updateFilter (key, value) {
+      if (!this.character.spellFilters) {
+        this.$set(this.character, 'spellFilters', {})
+      }
+      this.$set(this.character.spellFilters, key, value)
+      this.$emit('update-filter', {key: key, value: value})
+
+      this.$bus.$emit('update_character', {key: 'spellFilters', value: this.character.spellFilters})
+      // this.$set(this.character.spellFilters, event.key, event.value)
+    }
     // addItem (item) {
     //   this.$bus.$emit('push_item', {
     //     key: this.field,
@@ -163,9 +187,17 @@ export default {
     //   })
     // },
 
-    // character () {
-    //   return this.$store.state.character
-    // }
+    character () {
+      return this.$store.state.character
+    }
+  },
+
+  watch: {
+    character (value) {
+      if (value) {
+        this.checkFilters()
+      }
+    }
   }
 }
 </script>

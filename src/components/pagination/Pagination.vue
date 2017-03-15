@@ -25,94 +25,7 @@ export default {
   props: [
     'page',
     'total'
-    // 'item',
-    // 'field',
-    // 'edit',
-    // 'type' // 'edit', 'custom', 'add'
-  ],
-
-  // Data
-  // data () {
-    // return {
-    //   modalTitle: undefined,
-    //   editCopy: undefined
-    // }
-  // },
-
-  // Methods
-  methods: {
-    // addItem (item) {
-    //   this.$bus.$emit('push_item', {
-    //     key: this.field,
-    //     value: item
-    //   })
-    //   this.$bus.$emit('toast', `${item.name} Added`)
-    //   this.$emit('add')
-    // },
-
-    // async addCustomItem () {
-    //   try {
-    //     await this.$validator.validateAll()
-    //     this.$bus.$emit('push_item', {
-    //       key: this.field,
-    //       value: this.item
-    //     })
-    //     this.$bus.$emit('toast', `${this.item.name} Added`)
-    //     this.$nextTick(() => {
-    //       this.$bus.$emit('back')
-    //     })
-    //   } catch (error) {
-    //     console.warn(error)
-    //   }
-    // },
-
-    // editItem () {
-    //   this.editCopy = Object.assign({}, this.item)
-    //   this.$emit('edit')
-    // },
-
-    // cancelEdit () {
-    //   this.$emit('cancel', this.editCopy)
-    //   this.editCopy = undefined
-    // },
-
-    // async updateItem () {
-    //   try {
-    //     await this.$validator.validateAll()
-    //     this.modalTitle = this.item.name
-    //     this.$bus.$emit('update_item', {
-    //       key: this.field,
-    //       id: this.item.id,
-    //       value: this.item
-    //     })
-    //     this.editCopy = this.item
-    //     this.$emit('update')
-    //   } catch (error) {
-    //     console.warn(error)
-    //   }
-    // }
-  },
-
-  // Computed
-  computed: {
-    // character () {
-    //   return this.$store.state.character
-    // },
-
-    // weapons () {
-    //   let weapons = []
-    //   for (var i in this.character.weapons) {
-    //     let weapon = this.character.weapons[i]
-    //     weapon.id = i
-    //     weapons.push(weapon)
-    //   }
-    //   return weapons.sort((a, b) => {
-    //     if (a.name < b.name) return -1
-    //     if (a.name > b.name) return 1
-    //     return 0
-    //   })
-    // }
-  }
+  ]
 }
 </script>
 
@@ -124,7 +37,7 @@ export default {
   justify-content: flex-end;
   bottom: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 40px;
   padding: 0px;
   background-color: #fafafa;

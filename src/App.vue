@@ -54,6 +54,7 @@ export default {
     this.$bus.$on('update_character', (data) => {
       let update = {}
       update[data.key] = data.value
+      console.log(update)
       this.$store.commit('update_character', data)
       this.characterRef.update(update)
     })
