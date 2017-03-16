@@ -19,6 +19,7 @@ import XenDialog from '@/components/xen-components/Dialog'
 import XenTabs from '@/components/xen-components/Tabs'
 import XenTextArea from '@/components/xen-components/TextArea'
 import XenChips from '@/components/xen-components/Chips'
+import XenDropdown from '@/components/xen-components/Dropdown'
 
 // Vue.use(XenButton)
 export default class Xen {
@@ -79,6 +80,9 @@ export default class Xen {
   }, {
     selector: 'xen-text-area',
     name: XenTextArea
+  }, {
+    selector: 'xen-dropdown',
+    name: XenDropdown
   }, {
     selector: 'xen-chips',
     name: XenChips

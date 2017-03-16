@@ -22,5 +22,11 @@ export default class FirebaseSetup {
         return firebaseApp
       }
     })
+
+    // Object.defineProperty(Vue.prototype, '$db', {
+    //   get () {
+    //     return db
+    //   }
+    // })
   }
 }

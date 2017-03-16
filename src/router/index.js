@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+// import Hello from '@/components/Hello'
 
 // Auth Pages
 import SignIn from '@/components/pages/auth/SignIn'
@@ -26,8 +26,8 @@ Vue.use(Router)
 export default new Router({
   routes: [{
     path: '/',
-    name: 'Hello',
-    component: Hello
+    name: 'SignIn',
+    component: SignIn
   }, {
     path: '/sign-in',
     name: 'SignIn',

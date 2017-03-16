@@ -4,10 +4,10 @@
     </xen-page-toolbar>
     <xen-tabs class="xen-page-tabs" theme="indigo" default-tab="My Groups">
       <div slot="My Groups">
-        <known-spells></known-spells>
+        <my-groups></my-groups>
       </div>
       <div slot="New Group">
-        <browse-spells></browse-spells>
+        <new-group></new-group>
       </div>
     </xen-tabs>
   </div>
