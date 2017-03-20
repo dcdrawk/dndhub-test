@@ -18,59 +18,46 @@
             <th class="add-col text-center"></th>
           </tr>
         </thead>
-        <tbody>
+        <!--<tbody>
           <tr v-for="(item, index) in groups" ref="rows">
             <td class="xen-first-col"
-            @click="selectItem(item, index);">
+            @click="selectItem(item);">
               <div>{{ item.name }}</div>
               <div class="secondary-text">{{ Object.keys(item.members).length }} Member</div>
             </td>
-            <td class="add-col text-center"
-            @click="">
-              <!--<xen-icon-button class="xen-color-grey"
-              icon="delete"
-              @click.native="">
-              </xen-icon-button>-->
-              <xen-dropdown :open="item.open" @toggle="item.open = false"
+            <td class="add-col text-center">
+              <xen-dropdown :open="open" @toggle="open = false"
               position="right">
                 <xen-icon-button
                 style="position: relative;"
                 slot="target"
                 icon="more_vert"
-
                 :offset-left="50"
-                @click.native="$set(item, 'open', !item.open)">
+                @click.native="open = !open">
                 </xen-icon-button>
                 <div slot="menu">
                   <xen-list>
-                    <xen-list-item
-                    text="Invite" icon="person_add"
-                    @click="item.open = false">
-                    </xen-list-item>
-                    <xen-list-item
-                    text="Delete" icon="delete"
-                    @click="item.open = false">
-                    </xen-list-item>
+                    <xen-list-item text="Delete" icon="delete"></xen-list-item>
                   </xen-list>
                 </div>
               </xen-dropdown>
             </td>
           </tr>
-        </tbody>
+        </tbody>-->
       </table>
     </div>
   </section>
 </template>
 
 <script>
-import Hammer from 'hammerjs'
+// import Hammer from 'hammerjs'
 // import ItemDialog from '../../dialogs/ItemDialog'
 // import SpellInputs from './SpellInputs'
 // import SpellFilters from './SpellFilters'
 
 export default {
   // Name
-  name: 'my-groups',
+  name: 'members',
 
   components: {
     // ItemDialog,
@@ -81,10 +68,10 @@ export default {
   // Data
   data () {
     return {
-      groups: [],
-      open: false,
-      groupIds: undefined,
-      groupsRef: undefined
+      members: []
+      // open: false,
+      // groupIds: undefined,
+      // groupsRef: undefined
       // field: 'spells',
       // selectedItem: undefined,
       // showDialog: false,
@@ -104,43 +91,47 @@ export default {
   },
 
   created () {
-    // console.log(this)
-    if (this.user) {
-      this.getGroupIds()
-    }
+    console.log('members')
+    // if (this.group) {
+    //   this.getGroupIds()
+    // }
   },
 
   mounted () {
-    console.log(this)
-    console.log(Hammer)
+    // console.log(this)
+    // console.log(Hammer)
   },
 
   // Methods
   methods: {
     getGroupIds () {
-      console.log('get the groups')
-      this.groupsRef = this.$firebase.database().ref(`/users/${this.user.uid}/groups`)
-      this.groupsRef.on('value', snapshot => {
-        this.getGroups(snapshot.val())
-      })
+      // console.log('get the groups')
+      // this.groupsRef = this.$firebase.database().ref(`/users/${this.user.uid}/groups`)
+      // this.groupsRef.on('value', snapshot => {
+      //   this.getGroups(snapshot.val())
+      // })
     },
 
-    getGroups (groupIds) {
+    getMembers (members) {
       this.groups = []
+      for (var i in members) {
+        console.log(i)
+        // this.$firebase.database().ref(`/groups/${id}`).once('value').then((snapshot) => {
+
+        // }
+      }
+      // this.groups = []
       // const length = Object.keys(groupIds).length
       // let i = 0
-      for (let id in groupIds) {
-        this.$firebase.database().ref(`/groups/${id}`).once('value').then((snapshot) => {
-          // i++
-          console.log(snapshot)
-          let group = snapshot.val()
-          group.id = snapshot.key
-          this.groups.push(group)
-          // if (i >= length) {
-          //   this.addSwipe()
-          // }
-        })
-      }
+      // for (let id in groupIds) {
+      //   this.$firebase.database().ref(`/groups/${id}`).once('value').then((snapshot) => {
+      //     i++
+      //     this.groups.push(snapshot.val())
+      //     if (i >= length) {
+      //       this.addSwipe()
+      //     }
+      //   })
+      // }
       // this.addSwipe()
     },
 
@@ -162,9 +153,6 @@ export default {
 
     selectItem (item, id) {
       console.log(item)
-      // item.id = id
-      this.$store.commit('select_group', item)
-      this.$router.push({name: 'Group'})
     //   this.dialogType = 'edit'
     //   this.selectedItem = Object.assign({}, item)
     //   this.dialogTitle = item.name
@@ -203,6 +191,10 @@ export default {
 
     user () {
       return this.$store.state.user
+    },
+
+    group () {
+      return this.$store.state.group
     }
 
     // groups () {

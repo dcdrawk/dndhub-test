@@ -21,6 +21,7 @@ import Armor from '@/components/pages/armor/Armor'
 import Spells from '@/components/pages/spells/Spells'
 
 import Groups from '@/components/pages/groups/Groups'
+import Group from '@/components/pages/group/Group'
 Vue.use(Router)
 
 export default new Router({
@@ -80,5 +81,9 @@ export default new Router({
     path: '/groups',
     name: 'Groups',
     component: Groups
+  }, {
+    path: '/group',
+    name: 'Group',
+    component: Group
   }]
 })

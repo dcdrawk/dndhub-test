@@ -277,6 +277,11 @@ table {
 
 .add-col {
   width: 72px;
+  overflow: visible;
+}
+
+.xen-data-table td.add-col {
+  overflow: visible;
 }
 
 .xen-table-buttons {

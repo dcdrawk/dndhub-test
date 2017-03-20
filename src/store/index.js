@@ -11,7 +11,10 @@ const store = new Vuex.Store({
     characters: undefined,
     characterId: window.localStorage.getItem('characterId'),
     character: undefined,
-    gameData: {}
+    gameData: {},
+    group: window.localStorage.getItem('group')
+    ? JSON.parse(window.localStorage.getItem('group'))
+    : undefined
   },
 
   // Mutations
@@ -22,6 +25,12 @@ const store = new Vuex.Store({
 
     logout (state, user) {
       state.user = undefined
+      state.character = undefined
+      state.characterId = undefined
+      state.characters = undefined
+      state.group = undefined
+      window.localStorage.removeItem('characterId')
+      window.localStorage.removeItem('group')
     },
 
     update_characters (state, characters) {
@@ -29,7 +38,9 @@ const store = new Vuex.Store({
     },
 
     set_character (state, character) {
-      // console.log('state set char')
+      console.log('state set char')
+      console.log(character)
+
       if (character) {
         if (character.id) {
           state.characterId = character.id
@@ -39,12 +50,19 @@ const store = new Vuex.Store({
         state.characterId = undefined
         window.localStorage.removeItem('characterId')
       }
-      state.character = character
+      // state.character = character
+      Vue.set(state, 'character', character)
     },
 
     update_character (state, data) {
       Vue.set(state.character, data.key, data.value)
       // window.localStorage.setItem('character', window.JSON.stringify(state.character))
+    },
+
+    select_group (state, group) {
+      state.group = group
+      // Vue.set(state, 'group', group)
+      window.localStorage.setItem('group', window.JSON.stringify(state.group))
     },
 
     push_item (state, data) {

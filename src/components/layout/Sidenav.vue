@@ -74,6 +74,9 @@
               <router-link to="/groups">
                 <xen-list-item text="Groups" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
               </router-link>
+              <router-link to="/group" v-if="group">
+                <xen-list-item :text="`Group - ${group.name}`" :bold="true" @click.native="$bus.$emit('close-sidenav');"></xen-list-item>
+              </router-link>
             </xen-list>
           </div>
 
@@ -136,6 +139,10 @@ export default {
 
     character () {
       return this.$store.state.character
+    },
+
+    group () {
+      return this.$store.state.group
     }
   },
 

@@ -43,6 +43,9 @@
               </form>
               <xen-loading-spinner class="xen-color-primary" v-if="loading">
               </xen-loading-spinner>
+              <div class="error xen-color-red text-center">
+                {{ message }}
+              </div>
             </xen-card-content>
             <xen-card-actions class="text-right">
               <xen-button :raised="true"
@@ -78,7 +81,8 @@ export default {
     return {
       email: undefined,
       password: undefined,
-      loading: false
+      loading: false,
+      message: undefined
     }
   },
 
@@ -90,6 +94,7 @@ export default {
         this.$bus.$emit('toast', `Signed in as ${user.email}`)
         this.$router.push({name: 'Profile'})
       } catch (error) {
+        this.message = error.message
         console.error(error)
       } finally {
         this.loading = false

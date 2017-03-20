@@ -44,8 +44,8 @@
           <xen-select :options="classes" :option-key="'name'"
           class="xen-color-primary"
           label="Class"
-          :value="character.class"
-          @input="$set(character, 'class', $event)">
+          :value="character.classPrimary"
+          @input="$set(character, 'classPrimary', $event)">
           </xen-select>
 
           <xen-select :options="races" :option-key="'name'"

@@ -22,6 +22,17 @@
             data-vv-value-path="dataValue">
             </xen-input>
 
+            <xen-input
+            class="xen-color-primary"
+            label="Display Name"
+            name="display_name"
+            :value="displayName"
+            @input="displayName = $event"
+            :error="errors.first('display_name')"
+            v-validate="'required'"
+            data-vv-value-path="dataValue">
+            </xen-input>
+
             <!--<input v-validate="'required|confirmed:repassword'" v-model="password" name="password" type="text">-->
             <!--{{ password }}-->
             <xen-input
@@ -45,6 +56,10 @@
             @input="repassword = $event; checkPassword();"
             data-vv-value-path="dataValue">
             </xen-input>
+
+            <div class="error xen-color-red text-center">
+              {{ message }}
+            </div>
           </xen-card-content>
           <xen-card-actions class="text-right">
             <xen-button :raised="true"
@@ -69,7 +84,9 @@ export default {
       email: undefined,
       password: undefined,
       repassword: undefined,
-      error: undefined
+      error: undefined,
+      message: undefined,
+      displayName: undefined
     }
   },
 
@@ -80,10 +97,17 @@ export default {
       try {
         await this.$validator.validateAll()
         const user = await this.$firebase.auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-        this.$bus.$emit('toast', `Signed up as ${user.email}`)
+        .createUserWithEmailAndPassword(this.email, this.password)
+        await user.updateProfile({
+          displayName: this.displayName
+        })
+        await this.$firebase.database()
+        .ref(`/users/${user.uid}/`)
+        .update({ displayName: this.displayName })
+        this.$bus.$emit('toast', `Signed up as ${this.displayName}`)
         // console.log(response)
       } catch (error) {
+        this.message = error.message
         console.warn(error)
       }
     },

@@ -16,16 +16,16 @@
               <xen-input label="Display Name"
               name="display"
               class="xen-color-primary"
-              :value="userEdit.displayName"
-              @input="userEdit.displayName = $event"
+              :value="user.displayName"
+              @input="$set(userEdit, 'displayName', $event)"
               :disabled="!editing">
               </xen-input>
               <xen-input label="Email"
               name="email"
               class="xen-color-primary"
               rules="required|email"
-              :value="userEdit.email"
-              @input="userEdit.email = $event"
+              :value="user.email"
+              @input="$set(userEdit, 'email', $event)"
               :disabled="!editing">
               </xen-input>
               <xen-loading-spinner class="xen-color-primary" v-if="saving"></xen-loading-spinner>
@@ -60,14 +60,15 @@ export default {
 
   // Created
   created () {
-    if (this.user) {
-      this.userEdit = this.user
-    }
+    // if (this.user) {
+    //   this.userEdit = this.user
+    // }
   },
 
   // Methods
   methods: {
     editProfile () {
+      this.userEdit = Object.assign({}, this.user)
       this.userCopy = Object.assign({}, this.user)
       this.editing = true
     },
@@ -86,6 +87,9 @@ export default {
           displayName: this.user.displayName,
           email: this.user.email
         })
+        await this.$firebase.database()
+        .ref(`/users/${this.user.uid}/`)
+        .update({ displayName: this.userEdit.displayName })
         this.$bus.$emit('toast', 'Profile Updated.')
       } catch (error) {
         console.error(error)
@@ -104,9 +108,9 @@ export default {
 
   // Watch
   watch: {
-    user (value) {
-      this.userEdit = value
-    }
+    // user (value) {
+    //   this.userEdit = value
+    // }
   }
 }
 </script>

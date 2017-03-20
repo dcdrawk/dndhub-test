@@ -59,11 +59,11 @@ export default {
     })
 
     this.$bus.$on('push_item', (data) => {
-      console.log(data)
+      // console.log(data)
       const ref = this.$firebase.database().ref(`${this.refPath}/${data.key}`)
       ref.push(data.value)
       .then(snapshot => {
-        console.log(snapshot.key)
+        // console.log(snapshot.key)
         this.$store.commit('push_item', {
           prop: data.key,
           key: snapshot.key,
@@ -73,7 +73,7 @@ export default {
     })
 
     this.$bus.$on('update_item', (data) => {
-      console.log(data)
+      // console.log(data)
       this.$firebase.database().ref(`${this.refPath}/${data.key}/${data.id}`)
       .update(data.value).then(() => {
         this.$store.commit('push_item', {
@@ -85,12 +85,12 @@ export default {
     })
 
     this.$bus.$on('remove_item', (data) => {
-      console.log(data)
+      // console.log(data)
       this.$store.commit('remove_item', {
         prop: data.key,
         id: data.id
       })
-      console.log(`${this.refPath}/${data.key}/${data.id}`)
+      // console.log(`${this.refPath}/${data.key}/${data.id}`)
       this.$firebase.database().ref(`${this.refPath}/${data.key}/${data.id}`)
       .remove()
     })
@@ -113,10 +113,13 @@ export default {
       if (this.characterRef) {
         this.characterRef.off()
       }
-      this.characterRef = this.$firebase.database().ref(this.refPath)
+      // console.log(this.refPath)
+      this.characterRef = this.$firebase.database()
+      .ref(`/characters/${this.user.uid}/${characterId}`)
       this.characterRef.once('value', (snapshot) => {
         let character = Object.assign({}, snapshot.val())
         character.id = characterId
+        // console.log(character)
         this.$store.commit('set_character', character)
       })
     }

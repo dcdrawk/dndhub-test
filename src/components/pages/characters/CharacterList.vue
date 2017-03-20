@@ -1,7 +1,19 @@
 <template>
   <div class="page-container">
     <xen-page-toolbar class="xen-theme-indigo" title="Character List"></xen-page-toolbar>
+
     <div class="xen-page-content xen-page-background">
+      <xen-card>
+        <div class="xen-table-buttons">
+          <xen-button class="xen-theme-blue" :raised="true"
+          @click.native="$router.push('/characters/new');">
+            New Character
+          </xen-button>
+        </div>
+      </xen-card>
+      <div v-if="!characters" class="text-center">
+       You don't any characters yet.
+      </div>
       <xen-card>
         <xen-list v-if="characters">
           <xen-list-item-custom v-for="(characterItem, index) in characters"
@@ -19,13 +31,13 @@
             </div>
           </xen-list-item-custom>
         </xen-list>
-        <xen-card-actions class="text-right">
+        <!--<xen-card-actions class="text-right">
           <xen-button class="xen-theme-primary"
           @click.native="$router.push('/characters/new');"
           :raised="true">
             New Character
           </xen-button>
-        </xen-card-actions>
+        </xen-card-actions>-->
       </xen-card>
       <xen-dialog :show="showDeleteDialog"
       :small="true"
@@ -74,8 +86,9 @@ export default {
 
     selectCharacter (character, id) {
       character.id = id
+      console.log(character)
       this.$bus.$emit('set_character', id)
-      this.$store.commit('set_character', character)
+      // this.$store.commit('set_character', character)
     },
 
     async deleteCharacter (characterId) {
