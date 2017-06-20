@@ -13,7 +13,7 @@
             </xen-input>
           </div>
 
-          <div class="col-lg-3 col-md-3 col-xs-6 xen-no-margin">
+          <div class="col-lg-3 col-md-3 col-xs-6">
             <xen-input label="Level"
             :debounce="500"
             name="level"
@@ -24,7 +24,7 @@
             </xen-input>
           </div>
 
-          <div class="col-lg-3 col-md-3 col-xs-6 xen-no-margin">
+          <div class="col-lg-3 col-md-3 col-xs-6">
             <xen-input label="Experience"
             :debounce="500"
             name="experience"
@@ -35,7 +35,7 @@
             </xen-input>
           </div>
 
-          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 xen-no-margin">
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
             <xen-select class="xen-color-primary"
             label="Race"
             :options="races"
@@ -45,7 +45,7 @@
             </xen-select>
           </div>
 
-          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 xen-no-margin">
+          <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
             <xen-select class="xen-color-primary xen-no-margin"
             label="Subrace"
             :options="subraces"

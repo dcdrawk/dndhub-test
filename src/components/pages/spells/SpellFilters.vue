@@ -1,6 +1,10 @@
 <template>
   <xen-card class="dnd-filters">
     <xen-card-content class="xen-table-filters">
+      <xen-button :raised="true" class="new-button xen-theme-blue"
+      @click.native="$emit('new')">
+        New
+      </xen-button>
       <div class="search-filter">
         <xen-input placeholder="Search Spells"
         class="xen-color-primary"
@@ -171,4 +175,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.new-button {
+  margin: 0 16px 0 0;
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 68px;
+}
+.search-filter {
+  margin-top: 4px;
+}
 </style>

@@ -89,12 +89,12 @@
       })">
       </xen-input>
 
-      <!-- Components -->
-      <xen-input label="Components"
-      :value="item.components"
+      <!-- Duration -->
+      <xen-input label="Duration"
+      :value="item.duration"
       :disabled="edit === false"
       @input="$emit('input', {
-        prop: 'components',
+        prop: 'duration',
         value: $event
       })">
       </xen-input>
@@ -121,7 +121,41 @@ export default {
   props: [
     'item',
     'edit'
-  ]
+  ],
+
+  mounted () {
+    // this.$bus.$on('validate', () => {
+    //   console.log('validate')
+    //   this.$validator.validateAll()
+    // })
+    console.log('test')
+    this.$bus.$on('validate', () => {
+      // this.$validator.validateAll()
+      this.validate()
+    })
+    // this.$validator.validateAll()
+  },
+
+  methods: {
+    async validate () {
+      console.log('try validate')
+      try {
+        this.$validator.validateAll()
+        this.$bus.$emit('validated')
+
+        // this.$bus.$emit('push_item', {
+        //   key: this.field,
+        //   value: this.item
+        // })
+        // this.$bus.$emit('toast', `${this.item.name} Added`)
+        // this.$nextTick(() => {
+        //   this.$bus.$emit('back')
+        // })
+      } catch (error) {
+        console.warn(error)
+      }
+    }
+  }
 }
 </script>
 

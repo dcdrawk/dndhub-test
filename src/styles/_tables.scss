@@ -9,7 +9,7 @@ table {
   @extend .whiteframe-z1;
   background-color: #fff;
   width: 100%;
-  margin-bottom: 40px;
+  // margin-bottom: 40px;
 
   .xen-data-table-header {
     height: 64px;
@@ -278,6 +278,7 @@ table {
 .add-col {
   width: 72px;
   overflow: visible;
+  padding-right: 0!important;
 }
 
 .xen-data-table td.add-col {
@@ -343,8 +344,9 @@ table {
   background-color: #EEEEEE;
   position: relative;
   &.xen-card-content {
-    padding-top: 12px;
-    padding-bottom: 0;
+    padding: 8px 8px 0 8px;
+    // padding-top: 8px;
+    // padding-bottom: 0;
   }
   .xen-input-container,
   input {
@@ -352,7 +354,7 @@ table {
   }
   .clear-input {
     position: absolute;
-    right: 64px;
+    right: 52px;
     top: 16px;
   }
 }

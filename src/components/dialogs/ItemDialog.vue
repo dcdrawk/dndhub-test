@@ -88,15 +88,20 @@ export default {
 
     async addCustomItem () {
       try {
-        await this.$validator.validateAll()
-        this.$bus.$emit('push_item', {
-          key: this.field,
-          value: this.item
+        this.$bus.$on('validated', () => {
+          this.$bus.$emit('push_item', {
+            key: this.field,
+            value: this.item
+          })
+          this.$bus.$emit('toast', `${this.item.name} Added`)
+          this.$nextTick(() => {
+            this.$bus.$emit('back')
+          })
         })
-        this.$bus.$emit('toast', `${this.item.name} Added`)
-        this.$nextTick(() => {
-          this.$bus.$emit('back')
-        })
+        await this.$bus.$emit('validate')
+        // await this.$validator.validateAll()
+        // await this.$children[0].$validator.validateAll()
+        console.log(this)
       } catch (error) {
         console.warn(error)
       }

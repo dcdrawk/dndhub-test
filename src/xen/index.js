@@ -1,5 +1,5 @@
 // import Vue from 'vue'
-import XenButton from '@/components/xen-components/Button'
+// import XenButton from '@/components/xen-components/Button'
 import XenIconButton from '@/components/xen-components/IconButton'
 import XenCard from '@/components/xen-components/Card'
 import XenCardHeader from '@/components/xen-components/CardHeader'
@@ -24,9 +24,9 @@ import XenDropdown from '@/components/xen-components/Dropdown'
 // Vue.use(XenButton)
 export default class Xen {
   static components = [{
-    selector: 'xen-button',
-    name: XenButton
-  }, {
+  //   selector: 'xen-button',
+  //   name: XenButton
+  // }, {
     selector: 'xen-icon-button',
     name: XenIconButton
   }, {

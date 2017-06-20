@@ -1,51 +1,57 @@
 <template>
   <section>
     <div class="xen-data-table bordered striped"
-     v-if="character">
-     <!--<xen-list>
-      <xen-list-item v-for="(item, index) in groups" :text="item.name">
-        <div slot="dropdown">
-          <xen-icon-button style="position: relative;" slot="target" icon="delete" @click.native="showDeleteDialog(key)"></xen-icon-button>
+     v-if="group">
+      <xen-card>
+        <div class="xen-table-buttons">
+          <xen-button class="xen-theme-blue" :raised="true"
+          @click.native="showInviteDialog = true">
+            Invite Code
+          </xen-button>
         </div>
-      </xen-list-item>
-    </xen-list>-->
+      </xen-card>
       <table>
         <thead class="hide">
           <tr>
             <th class="xen-first-col text-left">
               Name
             </th>
-            <th class="add-col text-center"></th>
           </tr>
         </thead>
-        <!--<tbody>
-          <tr v-for="(item, index) in groups" ref="rows">
-            <td class="xen-first-col"
-            @click="selectItem(item);">
-              <div>{{ item.name }}</div>
-              <div class="secondary-text">{{ Object.keys(item.members).length }} Member</div>
-            </td>
-            <td class="add-col text-center">
-              <xen-dropdown :open="open" @toggle="open = false"
-              position="right">
-                <xen-icon-button
-                style="position: relative;"
-                slot="target"
-                icon="more_vert"
-                :offset-left="50"
-                @click.native="open = !open">
-                </xen-icon-button>
-                <div slot="menu">
-                  <xen-list>
-                    <xen-list-item text="Delete" icon="delete"></xen-list-item>
-                  </xen-list>
-                </div>
-              </xen-dropdown>
+        <tbody v-if="!loading">
+          <tr v-for="(item, index) in members" ref="rows">
+            <td class="xen-first-col">
+              <div>
+                <span v-if="index === group.dm">
+                  <i class="material-icons xen-color-amber xen-no-margin">star</i>
+                </span>
+                {{ item.displayName }}
+                <strong v-if="index === group.dm">
+                  (DM)
+                </strong>
+              </div>
+              <div class="secondary-text"></div>
             </td>
           </tr>
-        </tbody>-->
+        </tbody>
       </table>
     </div>
+
+    <xen-dialog title="Invite Code" :show="showInviteDialog" @hide="showInviteDialog = false">
+
+      <div v-if="group">
+        <p>Invite code for {{group.name}}. Share with friends so they can join your group!</p>
+        <p class="group-invite-code xen-theme-grey">{{group.id}}</p>
+      </div>
+        <div slot="actions">
+          <div>
+            <xen-button @click.native="$bus.$emit('back')" class="xen-color-default">
+              Close
+            </xen-button>
+          </div>
+        </div>
+    </xen-dialog>
+
   </section>
 </template>
 
@@ -59,45 +65,46 @@ export default {
   // Name
   name: 'members',
 
+  props: {
+    group: Object
+  },
+
   components: {
-    // ItemDialog,
-    // SpellInputs,
-    // SpellFilters
   },
 
   // Data
   data () {
     return {
-      members: []
-      // open: false,
-      // groupIds: undefined,
-      // groupsRef: undefined
-      // field: 'spells',
-      // selectedItem: undefined,
-      // showDialog: false,
-      // dialogTitle: undefined,
-      // dialogType: 'edit',
-      // edit: false,
-      // spellFilters: {
-      //   search: undefined,
-      //   class: 'All',
-      //   school: 'All',
-      //   level: 'All',
-      //   limit: 20,
-      //   page: 1
-      // },
-      // showFilters: false
+      members: {},
+      loading: false,
+      showInviteDialog: false
     }
   },
 
   created () {
-    console.log('members')
-    // if (this.group) {
-    //   this.getGroupIds()
-    // }
+    if (this.group) {
+      this.getMembers()
+    }
   },
 
   mounted () {
+    const memberRef = this.$firebase.database().ref(`/groups/${this.group.id}/members`)
+    memberRef.on('child_added', (snapshot) => {
+      // console.log('ekofpeskpfos', snapshot)
+      // console.log(snapshot.val())
+      // this.$set(this.members, snapshot.key, snapshot.val())
+
+      this.$firebase.database().ref(`/users/${snapshot.key}`).on('value', (snapshot) => {
+        this.$nextTick(() => {
+          this.$set(this.members, snapshot.key, snapshot.val())
+        })
+      })
+    })
+    memberRef.on('child_removed', (snapshot) => {
+      console.log('member removed...')
+      this.$firebase.database().ref(`/users/${snapshot.key}`).off()
+      this.$delete(this.members, snapshot.key)
+    })
     // console.log(this)
     // console.log(Hammer)
   },
@@ -112,44 +119,16 @@ export default {
       // })
     },
 
-    getMembers (members) {
-      this.groups = []
-      for (var i in members) {
+    getMembers () {
+      for (let i in this.group.members) {
         console.log(i)
-        // this.$firebase.database().ref(`/groups/${id}`).once('value').then((snapshot) => {
-
-        // }
+        this.$firebase.database().ref(`/users/${i}`).on('value', (snapshot) => {
+          this.$nextTick(() => {
+            this.$set(this.members, snapshot.key, snapshot.val())
+          })
+        })
       }
-      // this.groups = []
-      // const length = Object.keys(groupIds).length
-      // let i = 0
-      // for (let id in groupIds) {
-      //   this.$firebase.database().ref(`/groups/${id}`).once('value').then((snapshot) => {
-      //     i++
-      //     this.groups.push(snapshot.val())
-      //     if (i >= length) {
-      //       this.addSwipe()
-      //     }
-      //   })
-      // }
-      // this.addSwipe()
     },
-
-    // addSwipe () {
-    //   this.$nextTick(() => {
-    //   // setTimeout(() => {
-    //     console.log(this.$refs.rows)
-    //     this.$refs.rows.forEach((row) => {
-    //       // console.log(row)
-    //       var hammertime = new Hammer(row)
-    //       hammertime.on('swipe', (ev) => {
-    //         console.log(ev)
-    //         ev.preventDefault()
-    //       })
-    //     })
-    //   // }, 0)
-    //   })
-    // },
 
     selectItem (item, id) {
       console.log(item)
@@ -160,27 +139,6 @@ export default {
     //     this.showDialog = true
     //   })
     }
-
-    // hideDialog () {
-    //   this.edit = false
-    //   this.showDialog = false
-    // },
-
-    // showNewDialog () {
-    //   this.dialogType = 'custom'
-    //   this.dialogTitle = 'New Weapon'
-    //   this.edit = true
-    //   this.selectedItem = {}
-    //   this.showDialog = true
-    // },
-
-    // removeItem (item, id) {
-    //   this.$bus.$emit('remove_item', {
-    //     key: this.field,
-    //     id: id
-    //   })
-    //   this.$bus.$emit('toast', `${item.name} Removed`)
-    // }
   },
 
   // Computed
@@ -191,51 +149,27 @@ export default {
 
     user () {
       return this.$store.state.user
-    },
-
-    group () {
-      return this.$store.state.group
     }
-
-    // groups () {
-      // return this.$store.state.character
-
-    // }
-
-    // items () {
-    //   let items = []
-    //   for (var i in this.character[this.field]) {
-    //     let item = this.character[this.field][i]
-    //     item.id = i
-    //     items.push(item)
-    //   }
-    //   return items.sort((a, b) => {
-    //     if (a.name < b.name) return -1
-    //     if (a.name > b.name) return 1
-    //     return 0
-    //   }).filter(item => {
-    //     return this.spellFilters.class && this.spellFilters.class !== 'All'
-    //     ? item.class.toLowerCase().includes(this.spellFilters.class.toLowerCase())
-    //     : true
-    //   }).filter(item => {
-    //     return this.spellFilters.school && this.spellFilters.school !== 'All'
-    //     ? item.school.toLowerCase().includes(this.spellFilters.school.toLowerCase())
-    //     : true
-    //   }).filter(item => {
-    //     return this.spellFilters.search
-    //     ? item.name.toLowerCase().includes(this.spellFilters.search.toLowerCase())
-    //     : true
-    //   }).filter(item => {
-    //     return this.spellFilters.level && this.spellFilters.level !== 'All'
-    //     ? item.level.toLowerCase().includes(this.spellFilters.level.toLowerCase())
-    //     : true
-    //   })
-    // }
   },
 
   watch: {
-    user (value) {
-      this.getGroupIds()
+    group (newVal, oldVal) {
+      this.loading = true
+      if (oldVal) {
+        for (let i in oldVal.members) {
+          this.$firebase.database().ref(`/users/${i}`).off()
+          this.$delete(this.members, i)
+        }
+      }
+      if (newVal) {
+        // this.members = undefined
+        this.getMembers()
+        // this.members = undefined
+      }
+      this.$nextTick(() => {
+        this.loading = false
+      })
+      // this.getGroupIds()
     }
   }
 }
@@ -245,4 +179,16 @@ export default {
 // .custom-item {
 //   padding-top: 16px;
 // }
+.xen-data-table td.xen-first-col i {
+  margin-left: 0;
+  margin-right: 8px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.group-invite-code {
+  padding: 10px;
+  background-color: #eee;
+  border: 1px solid rgba(0, 0, 0, 0.25)
+}
+
 </style>

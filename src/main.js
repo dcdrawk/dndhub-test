@@ -5,8 +5,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 // import
-import Xen from './xen'
+// import Xen from './xen'
 
+import XenComponents from './components/xen-components'
 // Vue validation
 // https://github.com/logaretm/vee-validate
 import VeeValidate from 'vee-validate'
@@ -29,10 +30,11 @@ const config = {
   strict: true
 }
 
+Vue.use(XenComponents)
 Vue.use(VeeValidate, config)
 
 Vue.config.productionTip = false
-Xen.register(Vue)
+// Xen.register(Vue)
 
 FirebaseSetup.init()
 console.dir(Vue)

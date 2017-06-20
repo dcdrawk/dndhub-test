@@ -41,8 +41,8 @@
               {{ item.ac }}
             </td>-->
             <td class="add-col text-center">
-              <xen-icon-button class="xen-theme-blue"
-              :raised="true" icon="add"
+              <xen-icon-button class="xen-color-grey"
+              :raised="false" icon="add"
               @click.native="addItem(item);">
               </xen-icon-button>
             </td>

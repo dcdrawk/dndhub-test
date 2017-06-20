@@ -12,8 +12,8 @@ const store = new Vuex.Store({
     characterId: window.localStorage.getItem('characterId'),
     character: undefined,
     gameData: {},
-    group: window.localStorage.getItem('group')
-    ? JSON.parse(window.localStorage.getItem('group'))
+    groupId: window.localStorage.getItem('groupId')
+    ? JSON.parse(window.localStorage.getItem('groupId'))
     : undefined
   },
 
@@ -59,10 +59,30 @@ const store = new Vuex.Store({
       // window.localStorage.setItem('character', window.JSON.stringify(state.character))
     },
 
-    select_group (state, group) {
-      state.group = group
-      // Vue.set(state, 'group', group)
-      window.localStorage.setItem('group', window.JSON.stringify(state.group))
+    select_group (state, groupId) {
+      // if (state.group) {
+
+      // }
+      // groupRef.on
+      // groupRef.on('value', (snapshot) => {
+      //   state.group = group
+      // })
+      state.groupId = groupId
+      Vue.set(state, 'groupId', groupId)
+      window.localStorage.setItem('groupId', window.JSON.stringify(state.groupId))
+    },
+
+    update_group (state, groupId) {
+      // if (state.group) {
+
+      // }
+      // groupRef.on
+      // groupRef.on('value', (snapshot) => {
+      //   state.group = group
+      // })
+      state.groupId = groupId
+      Vue.set(state, 'groupId', groupId)
+      window.localStorage.setItem('groupId', window.JSON.stringify(state.groupId))
     },
 
     push_item (state, data) {

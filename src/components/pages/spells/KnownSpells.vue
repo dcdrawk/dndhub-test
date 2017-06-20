@@ -8,7 +8,8 @@
     @filter-class="spellFilters.class = $event"
     @filter-school="spellFilters.school = $event"
     @filter-level="spellFilters.level = $event"
-    @filter-limit="spellFilters.limit = $event">
+    @filter-limit="spellFilters.limit = $event"
+    @new="showNewDialog()">
     </spell-filters>
     <!--<xen-card>
       <div class="xen-table-buttons">
@@ -133,7 +134,7 @@ export default {
 
     showNewDialog () {
       this.dialogType = 'custom'
-      this.dialogTitle = 'New Weapon'
+      this.dialogTitle = 'New Spell'
       this.edit = true
       this.selectedItem = {}
       this.showDialog = true
